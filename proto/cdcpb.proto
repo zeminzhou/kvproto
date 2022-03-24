@@ -83,6 +83,8 @@ message Event {
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
+
+        uint64 ttl = 8;
     }
 
     message Entries {
