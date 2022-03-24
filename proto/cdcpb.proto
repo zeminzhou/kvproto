@@ -67,6 +67,13 @@ message Event {
         ROLLBACK = 3;
         COMMITTED = 4;
         INITIALIZED = 5;
+        RAW_PUT = 6;
+    }
+
+    enum OpType {
+        UNKNOWN = 0;
+        PUT = 1;
+        DELETE = 2;
     }
 
     message Row {
@@ -74,19 +81,28 @@ message Event {
         uint64 commit_ts = 2;
         LogType type = 3;
 
-        enum OpType {
-            UNKNOWN = 0;
-            PUT = 1;
-            DELETE = 2;
-        }
         OpType op_type = 4;
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
     }
 
+    message KvEntry {
+        uint64 start_ts = 1;
+        uint64 ttl = 2;
+        LogType type = 3;
+
+        OpType op_type = 4;
+        bytes key = 5;
+        bytes value = 6;
+    }
+
     message Entries {
         repeated Row entries = 1;
+    }
+
+    message KvEntries {
+        repeated KvEntry entries = 1;
     }
 
     message Admin {
@@ -109,6 +125,7 @@ message Event {
         // Note that field 7 is taken by request_id.
         LongTxn long_txn = 8;
         // More region level events ...
+        KvEntries kv_entries = 9;
     }
 }
 
