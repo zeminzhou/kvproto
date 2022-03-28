@@ -83,6 +83,8 @@ message Event {
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
+        // expire_ts_unix_secs is used for rawkv,
+        // and represents the expiration time for key with ttl.
         uint64 expire_ts_unix_secs = 8;
     }
 
