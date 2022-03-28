@@ -83,7 +83,7 @@ message Event {
         bytes key = 5;
         bytes value = 6;
         bytes old_value = 7;
-        // expire_ts_unix_secs is used for rawkv,
+        // expire_ts_unix_secs is used for RawKV (see `ChangeDataRequest.KvApi`),
         // and represents the expiration time for the key with ttl.
         uint64 expire_ts_unix_secs = 8;
     }
