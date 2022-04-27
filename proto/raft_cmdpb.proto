@@ -326,6 +326,10 @@ message RaftResponseHeader {
     uint64 current_term = 3;
 }
 
+message CustomRequest {
+    bytes data = 1;
+}
+
 message RaftCmdRequest {
     RaftRequestHeader header = 1;
     // We can't enclose normal requests and administrator request
@@ -333,6 +337,7 @@ message RaftCmdRequest {
     repeated Request requests = 2;
     AdminRequest admin_request = 3;
     StatusRequest status_request = 4;
+    CustomRequest custom_request = 5;
 }
 
 message RaftCmdResponse {
