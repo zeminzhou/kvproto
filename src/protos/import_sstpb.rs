@@ -6445,6 +6445,7 @@ pub struct KvMeta {
     pub length: u64,
     pub cf: ::std::string::String,
     pub is_delete: bool,
+    pub start_ts: u64,
     pub restore_ts: u64,
     pub start_key: ::std::vec::Vec<u8>,
     pub end_key: ::std::vec::Vec<u8>,
@@ -6546,6 +6547,21 @@ impl KvMeta {
     // Param is passed by value, moved
     pub fn set_is_delete(&mut self, v: bool) {
         self.is_delete = v;
+    }
+
+    // uint64 start_ts = 10;
+
+
+    pub fn get_start_ts(&self) -> u64 {
+        self.start_ts
+    }
+    pub fn clear_start_ts(&mut self) {
+        self.start_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_ts(&mut self, v: u64) {
+        self.start_ts = v;
     }
 
     // uint64 restore_ts = 5;
@@ -6686,6 +6702,13 @@ impl ::protobuf::Message for KvMeta {
                     let tmp = is.read_bool()?;
                     self.is_delete = tmp;
                 },
+                10 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.start_ts = tmp;
+                },
                 5 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -6733,6 +6756,9 @@ impl ::protobuf::Message for KvMeta {
         if self.is_delete != false {
             my_size += 2;
         }
+        if self.start_ts != 0 {
+            my_size += ::protobuf::rt::value_size(10, self.start_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
         if self.restore_ts != 0 {
             my_size += ::protobuf::rt::value_size(5, self.restore_ts, ::protobuf::wire_format::WireTypeVarint);
         }
@@ -6765,6 +6791,9 @@ impl ::protobuf::Message for KvMeta {
         }
         if self.is_delete != false {
             os.write_bool(4, self.is_delete)?;
+        }
+        if self.start_ts != 0 {
+            os.write_uint64(10, self.start_ts)?;
         }
         if self.restore_ts != 0 {
             os.write_uint64(5, self.restore_ts)?;
@@ -6832,6 +6861,7 @@ impl ::protobuf::Clear for KvMeta {
         self.length = 0;
         self.cf.clear();
         self.is_delete = false;
+        self.start_ts = 0;
         self.restore_ts = 0;
         self.start_key.clear();
         self.end_key.clear();
@@ -6850,6 +6880,7 @@ impl ::protobuf::PbPrint for KvMeta {
         ::protobuf::PbPrint::fmt(&self.length, "length", buf);
         ::protobuf::PbPrint::fmt(&self.cf, "cf", buf);
         ::protobuf::PbPrint::fmt(&self.is_delete, "is_delete", buf);
+        ::protobuf::PbPrint::fmt(&self.start_ts, "start_ts", buf);
         ::protobuf::PbPrint::fmt(&self.restore_ts, "restore_ts", buf);
         ::protobuf::PbPrint::fmt(&self.start_key, "start_key", buf);
         ::protobuf::PbPrint::fmt(&self.end_key, "end_key", buf);
@@ -6869,6 +6900,7 @@ impl ::std::fmt::Debug for KvMeta {
         ::protobuf::PbPrint::fmt(&self.length, "length", &mut s);
         ::protobuf::PbPrint::fmt(&self.cf, "cf", &mut s);
         ::protobuf::PbPrint::fmt(&self.is_delete, "is_delete", &mut s);
+        ::protobuf::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
         ::protobuf::PbPrint::fmt(&self.restore_ts, "restore_ts", &mut s);
         ::protobuf::PbPrint::fmt(&self.start_key, "start_key", &mut s);
         ::protobuf::PbPrint::fmt(&self.end_key, "end_key", &mut s);

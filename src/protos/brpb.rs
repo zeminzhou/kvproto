@@ -8335,6 +8335,8 @@ pub struct Metadata {
     pub files: ::protobuf::RepeatedField<DataFileInfo>,
     pub store_id: i64,
     pub resolved_ts: u64,
+    pub max_ts: u64,
+    pub min_ts: u64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -8405,6 +8407,36 @@ impl Metadata {
     pub fn set_resolved_ts(&mut self, v: u64) {
         self.resolved_ts = v;
     }
+
+    // uint64 max_ts = 4;
+
+
+    pub fn get_max_ts(&self) -> u64 {
+        self.max_ts
+    }
+    pub fn clear_max_ts(&mut self) {
+        self.max_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_max_ts(&mut self, v: u64) {
+        self.max_ts = v;
+    }
+
+    // uint64 min_ts = 5;
+
+
+    pub fn get_min_ts(&self) -> u64 {
+        self.min_ts
+    }
+    pub fn clear_min_ts(&mut self) {
+        self.min_ts = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_min_ts(&mut self, v: u64) {
+        self.min_ts = v;
+    }
 }
 
 impl ::protobuf::Message for Metadata {
@@ -8438,6 +8470,20 @@ impl ::protobuf::Message for Metadata {
                     let tmp = is.read_uint64()?;
                     self.resolved_ts = tmp;
                 },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.max_ts = tmp;
+                },
+                5 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.min_ts = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -8460,6 +8506,12 @@ impl ::protobuf::Message for Metadata {
         if self.resolved_ts != 0 {
             my_size += ::protobuf::rt::value_size(3, self.resolved_ts, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.max_ts != 0 {
+            my_size += ::protobuf::rt::value_size(4, self.max_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.min_ts != 0 {
+            my_size += ::protobuf::rt::value_size(5, self.min_ts, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -8476,6 +8528,12 @@ impl ::protobuf::Message for Metadata {
         }
         if self.resolved_ts != 0 {
             os.write_uint64(3, self.resolved_ts)?;
+        }
+        if self.max_ts != 0 {
+            os.write_uint64(4, self.max_ts)?;
+        }
+        if self.min_ts != 0 {
+            os.write_uint64(5, self.min_ts)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -8527,6 +8585,8 @@ impl ::protobuf::Clear for Metadata {
         self.files.clear();
         self.store_id = 0;
         self.resolved_ts = 0;
+        self.max_ts = 0;
+        self.min_ts = 0;
         self.unknown_fields.clear();
     }
 }
@@ -8539,6 +8599,8 @@ impl ::protobuf::PbPrint for Metadata {
         ::protobuf::PbPrint::fmt(&self.files, "files", buf);
         ::protobuf::PbPrint::fmt(&self.store_id, "store_id", buf);
         ::protobuf::PbPrint::fmt(&self.resolved_ts, "resolved_ts", buf);
+        ::protobuf::PbPrint::fmt(&self.max_ts, "max_ts", buf);
+        ::protobuf::PbPrint::fmt(&self.min_ts, "min_ts", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -8552,6 +8614,8 @@ impl ::std::fmt::Debug for Metadata {
         ::protobuf::PbPrint::fmt(&self.files, "files", &mut s);
         ::protobuf::PbPrint::fmt(&self.store_id, "store_id", &mut s);
         ::protobuf::PbPrint::fmt(&self.resolved_ts, "resolved_ts", &mut s);
+        ::protobuf::PbPrint::fmt(&self.max_ts, "max_ts", &mut s);
+        ::protobuf::PbPrint::fmt(&self.min_ts, "min_ts", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -8579,6 +8643,7 @@ pub struct DataFileInfo {
     pub is_meta: bool,
     pub table_id: i64,
     pub length: u64,
+    pub min_begin_ts_in_default_cf: u64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -8859,6 +8924,21 @@ impl DataFileInfo {
     pub fn set_length(&mut self, v: u64) {
         self.length = v;
     }
+
+    // uint64 min_begin_ts_in_default_cf = 15;
+
+
+    pub fn get_min_begin_ts_in_default_cf(&self) -> u64 {
+        self.min_begin_ts_in_default_cf
+    }
+    pub fn clear_min_begin_ts_in_default_cf(&mut self) {
+        self.min_begin_ts_in_default_cf = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_min_begin_ts_in_default_cf(&mut self, v: u64) {
+        self.min_begin_ts_in_default_cf = v;
+    }
 }
 
 impl ::protobuf::Message for DataFileInfo {
@@ -8944,6 +9024,13 @@ impl ::protobuf::Message for DataFileInfo {
                     let tmp = is.read_uint64()?;
                     self.length = tmp;
                 },
+                15 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.min_begin_ts_in_default_cf = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -8998,6 +9085,9 @@ impl ::protobuf::Message for DataFileInfo {
         if self.length != 0 {
             my_size += ::protobuf::rt::value_size(14, self.length, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.min_begin_ts_in_default_cf != 0 {
+            my_size += ::protobuf::rt::value_size(15, self.min_begin_ts_in_default_cf, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -9045,6 +9135,9 @@ impl ::protobuf::Message for DataFileInfo {
         }
         if self.length != 0 {
             os.write_uint64(14, self.length)?;
+        }
+        if self.min_begin_ts_in_default_cf != 0 {
+            os.write_uint64(15, self.min_begin_ts_in_default_cf)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -9107,6 +9200,7 @@ impl ::protobuf::Clear for DataFileInfo {
         self.is_meta = false;
         self.table_id = 0;
         self.length = 0;
+        self.min_begin_ts_in_default_cf = 0;
         self.unknown_fields.clear();
     }
 }
@@ -9130,6 +9224,7 @@ impl ::protobuf::PbPrint for DataFileInfo {
         ::protobuf::PbPrint::fmt(&self.is_meta, "is_meta", buf);
         ::protobuf::PbPrint::fmt(&self.table_id, "table_id", buf);
         ::protobuf::PbPrint::fmt(&self.length, "length", buf);
+        ::protobuf::PbPrint::fmt(&self.min_begin_ts_in_default_cf, "min_begin_ts_in_default_cf", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -9154,6 +9249,7 @@ impl ::std::fmt::Debug for DataFileInfo {
         ::protobuf::PbPrint::fmt(&self.is_meta, "is_meta", &mut s);
         ::protobuf::PbPrint::fmt(&self.table_id, "table_id", &mut s);
         ::protobuf::PbPrint::fmt(&self.length, "length", &mut s);
+        ::protobuf::PbPrint::fmt(&self.min_begin_ts_in_default_cf, "min_begin_ts_in_default_cf", &mut s);
         write!(f, "{}", s)
     }
 }

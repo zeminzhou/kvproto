@@ -15201,6 +15201,8 @@ pub struct PeerReport {
     // message fields
     pub raft_state: ::protobuf::SingularPtrField<super::raft_serverpb::RaftLocalState>,
     pub region_state: ::protobuf::SingularPtrField<super::raft_serverpb::RegionLocalState>,
+    pub is_force_leader: bool,
+    pub has_commit_merge: bool,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -15282,6 +15284,36 @@ impl PeerReport {
     pub fn take_region_state(&mut self) -> super::raft_serverpb::RegionLocalState {
         self.region_state.take().unwrap_or_else(|| super::raft_serverpb::RegionLocalState::new())
     }
+
+    // bool is_force_leader = 3;
+
+
+    pub fn get_is_force_leader(&self) -> bool {
+        self.is_force_leader
+    }
+    pub fn clear_is_force_leader(&mut self) {
+        self.is_force_leader = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_is_force_leader(&mut self, v: bool) {
+        self.is_force_leader = v;
+    }
+
+    // bool has_commit_merge = 4;
+
+
+    pub fn get_has_commit_merge(&self) -> bool {
+        self.has_commit_merge
+    }
+    pub fn clear_has_commit_merge(&mut self) {
+        self.has_commit_merge = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_has_commit_merge(&mut self, v: bool) {
+        self.has_commit_merge = v;
+    }
 }
 
 impl ::protobuf::Message for PeerReport {
@@ -15309,6 +15341,20 @@ impl ::protobuf::Message for PeerReport {
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.region_state)?;
                 },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.is_force_leader = tmp;
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.has_commit_merge = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -15329,6 +15375,12 @@ impl ::protobuf::Message for PeerReport {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.is_force_leader != false {
+            my_size += 2;
+        }
+        if self.has_commit_merge != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -15344,6 +15396,12 @@ impl ::protobuf::Message for PeerReport {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.is_force_leader != false {
+            os.write_bool(3, self.is_force_leader)?;
+        }
+        if self.has_commit_merge != false {
+            os.write_bool(4, self.has_commit_merge)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -15394,6 +15452,8 @@ impl ::protobuf::Clear for PeerReport {
     fn clear(&mut self) {
         self.raft_state.clear();
         self.region_state.clear();
+        self.is_force_leader = false;
+        self.has_commit_merge = false;
         self.unknown_fields.clear();
     }
 }
@@ -15405,6 +15465,8 @@ impl ::protobuf::PbPrint for PeerReport {
         let old_len = buf.len();
         ::protobuf::PbPrint::fmt(&self.raft_state, "raft_state", buf);
         ::protobuf::PbPrint::fmt(&self.region_state, "region_state", buf);
+        ::protobuf::PbPrint::fmt(&self.is_force_leader, "is_force_leader", buf);
+        ::protobuf::PbPrint::fmt(&self.has_commit_merge, "has_commit_merge", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -15417,6 +15479,8 @@ impl ::std::fmt::Debug for PeerReport {
         let mut s = String::new();
         ::protobuf::PbPrint::fmt(&self.raft_state, "raft_state", &mut s);
         ::protobuf::PbPrint::fmt(&self.region_state, "region_state", &mut s);
+        ::protobuf::PbPrint::fmt(&self.is_force_leader, "is_force_leader", &mut s);
+        ::protobuf::PbPrint::fmt(&self.has_commit_merge, "has_commit_merge", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -15431,6 +15495,7 @@ impl ::protobuf::reflect::ProtobufValue for PeerReport {
 pub struct StoreReport {
     // message fields
     pub peer_reports: ::protobuf::RepeatedField<PeerReport>,
+    pub step: u64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -15471,6 +15536,21 @@ impl StoreReport {
     pub fn take_peer_reports(&mut self) -> ::protobuf::RepeatedField<PeerReport> {
         ::std::mem::replace(&mut self.peer_reports, ::protobuf::RepeatedField::new())
     }
+
+    // uint64 step = 2;
+
+
+    pub fn get_step(&self) -> u64 {
+        self.step
+    }
+    pub fn clear_step(&mut self) {
+        self.step = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_step(&mut self, v: u64) {
+        self.step = v;
+    }
 }
 
 impl ::protobuf::Message for StoreReport {
@@ -15490,6 +15570,13 @@ impl ::protobuf::Message for StoreReport {
                 1 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.peer_reports)?;
                 },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.step = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -15506,6 +15593,9 @@ impl ::protobuf::Message for StoreReport {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if self.step != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.step, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -15517,6 +15607,9 @@ impl ::protobuf::Message for StoreReport {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if self.step != 0 {
+            os.write_uint64(2, self.step)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -15565,6 +15658,7 @@ impl ::protobuf::Message for StoreReport {
 impl ::protobuf::Clear for StoreReport {
     fn clear(&mut self) {
         self.peer_reports.clear();
+        self.step = 0;
         self.unknown_fields.clear();
     }
 }
@@ -15575,6 +15669,7 @@ impl ::protobuf::PbPrint for StoreReport {
         ::protobuf::push_message_start(name, buf);
         let old_len = buf.len();
         ::protobuf::PbPrint::fmt(&self.peer_reports, "peer_reports", buf);
+        ::protobuf::PbPrint::fmt(&self.step, "step", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -15586,6 +15681,7 @@ impl ::std::fmt::Debug for StoreReport {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         ::protobuf::PbPrint::fmt(&self.peer_reports, "peer_reports", &mut s);
+        ::protobuf::PbPrint::fmt(&self.step, "step", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -15936,11 +16032,414 @@ impl ::protobuf::reflect::ProtobufValue for StoreHeartbeatRequest {
 }
 
 #[derive(PartialEq,Clone,Default)]
+pub struct DemoteFailedVoters {
+    // message fields
+    pub region_id: u64,
+    pub failed_voters: ::protobuf::RepeatedField<super::metapb::Peer>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a DemoteFailedVoters {
+    fn default() -> &'a DemoteFailedVoters {
+        <DemoteFailedVoters as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl DemoteFailedVoters {
+    pub fn new() -> DemoteFailedVoters {
+        ::std::default::Default::default()
+    }
+
+    // uint64 region_id = 1;
+
+
+    pub fn get_region_id(&self) -> u64 {
+        self.region_id
+    }
+    pub fn clear_region_id(&mut self) {
+        self.region_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_region_id(&mut self, v: u64) {
+        self.region_id = v;
+    }
+
+    // repeated .metapb.Peer failed_voters = 2;
+
+
+    pub fn get_failed_voters(&self) -> &[super::metapb::Peer] {
+        &self.failed_voters
+    }
+    pub fn clear_failed_voters(&mut self) {
+        self.failed_voters.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_failed_voters(&mut self, v: ::protobuf::RepeatedField<super::metapb::Peer>) {
+        self.failed_voters = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_failed_voters(&mut self) -> &mut ::protobuf::RepeatedField<super::metapb::Peer> {
+        &mut self.failed_voters
+    }
+
+    // Take field
+    pub fn take_failed_voters(&mut self) -> ::protobuf::RepeatedField<super::metapb::Peer> {
+        ::std::mem::replace(&mut self.failed_voters, ::protobuf::RepeatedField::new())
+    }
+}
+
+impl ::protobuf::Message for DemoteFailedVoters {
+    fn is_initialized(&self) -> bool {
+        for v in &self.failed_voters {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.region_id = tmp;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.failed_voters)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if self.region_id != 0 {
+            my_size += ::protobuf::rt::value_size(1, self.region_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        for value in &self.failed_voters {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if self.region_id != 0 {
+            os.write_uint64(1, self.region_id)?;
+        }
+        for v in &self.failed_voters {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> DemoteFailedVoters {
+        DemoteFailedVoters::new()
+    }
+
+    fn default_instance() -> &'static DemoteFailedVoters {
+        static mut instance: ::protobuf::lazy::Lazy<DemoteFailedVoters> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const DemoteFailedVoters,
+        };
+        unsafe {
+            instance.get(DemoteFailedVoters::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for DemoteFailedVoters {
+    fn clear(&mut self) {
+        self.region_id = 0;
+        self.failed_voters.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for DemoteFailedVoters {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.region_id, "region_id", buf);
+        ::protobuf::PbPrint::fmt(&self.failed_voters, "failed_voters", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for DemoteFailedVoters {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.region_id, "region_id", &mut s);
+        ::protobuf::PbPrint::fmt(&self.failed_voters, "failed_voters", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DemoteFailedVoters {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct ForceLeader {
+    // message fields
+    pub failed_stores: ::std::vec::Vec<u64>,
+    pub enter_force_leaders: ::std::vec::Vec<u64>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a ForceLeader {
+    fn default() -> &'a ForceLeader {
+        <ForceLeader as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl ForceLeader {
+    pub fn new() -> ForceLeader {
+        ::std::default::Default::default()
+    }
+
+    // repeated uint64 failed_stores = 1;
+
+
+    pub fn get_failed_stores(&self) -> &[u64] {
+        &self.failed_stores
+    }
+    pub fn clear_failed_stores(&mut self) {
+        self.failed_stores.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_failed_stores(&mut self, v: ::std::vec::Vec<u64>) {
+        self.failed_stores = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_failed_stores(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.failed_stores
+    }
+
+    // Take field
+    pub fn take_failed_stores(&mut self) -> ::std::vec::Vec<u64> {
+        ::std::mem::replace(&mut self.failed_stores, ::std::vec::Vec::new())
+    }
+
+    // repeated uint64 enter_force_leaders = 2;
+
+
+    pub fn get_enter_force_leaders(&self) -> &[u64] {
+        &self.enter_force_leaders
+    }
+    pub fn clear_enter_force_leaders(&mut self) {
+        self.enter_force_leaders.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_enter_force_leaders(&mut self, v: ::std::vec::Vec<u64>) {
+        self.enter_force_leaders = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_enter_force_leaders(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.enter_force_leaders
+    }
+
+    // Take field
+    pub fn take_enter_force_leaders(&mut self) -> ::std::vec::Vec<u64> {
+        ::std::mem::replace(&mut self.enter_force_leaders, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for ForceLeader {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.failed_stores)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.enter_force_leaders)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        for value in &self.failed_stores {
+            my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        for value in &self.enter_force_leaders {
+            my_size += ::protobuf::rt::value_size(2, *value, ::protobuf::wire_format::WireTypeVarint);
+        };
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        for v in &self.failed_stores {
+            os.write_uint64(1, *v)?;
+        };
+        for v in &self.enter_force_leaders {
+            os.write_uint64(2, *v)?;
+        };
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> ForceLeader {
+        ForceLeader::new()
+    }
+
+    fn default_instance() -> &'static ForceLeader {
+        static mut instance: ::protobuf::lazy::Lazy<ForceLeader> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ForceLeader,
+        };
+        unsafe {
+            instance.get(ForceLeader::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for ForceLeader {
+    fn clear(&mut self) {
+        self.failed_stores.clear();
+        self.enter_force_leaders.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for ForceLeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.failed_stores, "failed_stores", buf);
+        ::protobuf::PbPrint::fmt(&self.enter_force_leaders, "enter_force_leaders", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for ForceLeader {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.failed_stores, "failed_stores", &mut s);
+        ::protobuf::PbPrint::fmt(&self.enter_force_leaders, "enter_force_leaders", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for ForceLeader {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
 pub struct RecoveryPlan {
     // message fields
     pub creates: ::protobuf::RepeatedField<super::metapb::Region>,
     pub updates: ::protobuf::RepeatedField<super::metapb::Region>,
-    pub deletes: ::std::vec::Vec<u64>,
+    pub tombstones: ::std::vec::Vec<u64>,
+    pub demotes: ::protobuf::RepeatedField<DemoteFailedVoters>,
+    pub force_leader: ::protobuf::SingularPtrField<ForceLeader>,
+    pub step: u64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -16007,29 +16506,102 @@ impl RecoveryPlan {
         ::std::mem::replace(&mut self.updates, ::protobuf::RepeatedField::new())
     }
 
-    // repeated uint64 deletes = 3;
+    // repeated uint64 tombstones = 3;
 
 
-    pub fn get_deletes(&self) -> &[u64] {
-        &self.deletes
+    pub fn get_tombstones(&self) -> &[u64] {
+        &self.tombstones
     }
-    pub fn clear_deletes(&mut self) {
-        self.deletes.clear();
+    pub fn clear_tombstones(&mut self) {
+        self.tombstones.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_deletes(&mut self, v: ::std::vec::Vec<u64>) {
-        self.deletes = v;
+    pub fn set_tombstones(&mut self, v: ::std::vec::Vec<u64>) {
+        self.tombstones = v;
     }
 
     // Mutable pointer to the field.
-    pub fn mut_deletes(&mut self) -> &mut ::std::vec::Vec<u64> {
-        &mut self.deletes
+    pub fn mut_tombstones(&mut self) -> &mut ::std::vec::Vec<u64> {
+        &mut self.tombstones
     }
 
     // Take field
-    pub fn take_deletes(&mut self) -> ::std::vec::Vec<u64> {
-        ::std::mem::replace(&mut self.deletes, ::std::vec::Vec::new())
+    pub fn take_tombstones(&mut self) -> ::std::vec::Vec<u64> {
+        ::std::mem::replace(&mut self.tombstones, ::std::vec::Vec::new())
+    }
+
+    // repeated .pdpb.DemoteFailedVoters demotes = 4;
+
+
+    pub fn get_demotes(&self) -> &[DemoteFailedVoters] {
+        &self.demotes
+    }
+    pub fn clear_demotes(&mut self) {
+        self.demotes.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_demotes(&mut self, v: ::protobuf::RepeatedField<DemoteFailedVoters>) {
+        self.demotes = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_demotes(&mut self) -> &mut ::protobuf::RepeatedField<DemoteFailedVoters> {
+        &mut self.demotes
+    }
+
+    // Take field
+    pub fn take_demotes(&mut self) -> ::protobuf::RepeatedField<DemoteFailedVoters> {
+        ::std::mem::replace(&mut self.demotes, ::protobuf::RepeatedField::new())
+    }
+
+    // .pdpb.ForceLeader force_leader = 5;
+
+
+    pub fn get_force_leader(&self) -> &ForceLeader {
+        self.force_leader.as_ref().unwrap_or_else(|| ForceLeader::default_instance())
+    }
+    pub fn clear_force_leader(&mut self) {
+        self.force_leader.clear();
+    }
+
+    pub fn has_force_leader(&self) -> bool {
+        self.force_leader.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_force_leader(&mut self, v: ForceLeader) {
+        self.force_leader = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_force_leader(&mut self) -> &mut ForceLeader {
+        if self.force_leader.is_none() {
+            self.force_leader.set_default();
+        }
+        self.force_leader.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_force_leader(&mut self) -> ForceLeader {
+        self.force_leader.take().unwrap_or_else(|| ForceLeader::new())
+    }
+
+    // uint64 step = 6;
+
+
+    pub fn get_step(&self) -> u64 {
+        self.step
+    }
+    pub fn clear_step(&mut self) {
+        self.step = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_step(&mut self, v: u64) {
+        self.step = v;
     }
 }
 
@@ -16041,6 +16613,16 @@ impl ::protobuf::Message for RecoveryPlan {
             }
         };
         for v in &self.updates {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.demotes {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.force_leader {
             if !v.is_initialized() {
                 return false;
             }
@@ -16059,7 +16641,20 @@ impl ::protobuf::Message for RecoveryPlan {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.updates)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.deletes)?;
+                    ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.tombstones)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.demotes)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.force_leader)?;
+                },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.step = tmp;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -16081,9 +16676,20 @@ impl ::protobuf::Message for RecoveryPlan {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
-        for value in &self.deletes {
+        for value in &self.tombstones {
             my_size += ::protobuf::rt::value_size(3, *value, ::protobuf::wire_format::WireTypeVarint);
         };
+        for value in &self.demotes {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if let Some(ref v) = self.force_leader.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.step != 0 {
+            my_size += ::protobuf::rt::value_size(6, self.step, ::protobuf::wire_format::WireTypeVarint);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -16100,9 +16706,22 @@ impl ::protobuf::Message for RecoveryPlan {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
-        for v in &self.deletes {
+        for v in &self.tombstones {
             os.write_uint64(3, *v)?;
         };
+        for v in &self.demotes {
+            os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if let Some(ref v) = self.force_leader.as_ref() {
+            os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.step != 0 {
+            os.write_uint64(6, self.step)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -16152,7 +16771,10 @@ impl ::protobuf::Clear for RecoveryPlan {
     fn clear(&mut self) {
         self.creates.clear();
         self.updates.clear();
-        self.deletes.clear();
+        self.tombstones.clear();
+        self.demotes.clear();
+        self.force_leader.clear();
+        self.step = 0;
         self.unknown_fields.clear();
     }
 }
@@ -16164,7 +16786,10 @@ impl ::protobuf::PbPrint for RecoveryPlan {
         let old_len = buf.len();
         ::protobuf::PbPrint::fmt(&self.creates, "creates", buf);
         ::protobuf::PbPrint::fmt(&self.updates, "updates", buf);
-        ::protobuf::PbPrint::fmt(&self.deletes, "deletes", buf);
+        ::protobuf::PbPrint::fmt(&self.tombstones, "tombstones", buf);
+        ::protobuf::PbPrint::fmt(&self.demotes, "demotes", buf);
+        ::protobuf::PbPrint::fmt(&self.force_leader, "force_leader", buf);
+        ::protobuf::PbPrint::fmt(&self.step, "step", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -16177,7 +16802,10 @@ impl ::std::fmt::Debug for RecoveryPlan {
         let mut s = String::new();
         ::protobuf::PbPrint::fmt(&self.creates, "creates", &mut s);
         ::protobuf::PbPrint::fmt(&self.updates, "updates", &mut s);
-        ::protobuf::PbPrint::fmt(&self.deletes, "deletes", &mut s);
+        ::protobuf::PbPrint::fmt(&self.tombstones, "tombstones", &mut s);
+        ::protobuf::PbPrint::fmt(&self.demotes, "demotes", &mut s);
+        ::protobuf::PbPrint::fmt(&self.force_leader, "force_leader", &mut s);
+        ::protobuf::PbPrint::fmt(&self.step, "step", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -16195,7 +16823,7 @@ pub struct StoreHeartbeatResponse {
     pub replication_status: ::protobuf::SingularPtrField<super::replication_modepb::ReplicationStatus>,
     pub cluster_version: ::std::string::String,
     pub require_detailed_report: bool,
-    pub plan: ::protobuf::SingularPtrField<RecoveryPlan>,
+    pub recovery_plan: ::protobuf::SingularPtrField<RecoveryPlan>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -16319,37 +16947,37 @@ impl StoreHeartbeatResponse {
         self.require_detailed_report = v;
     }
 
-    // .pdpb.RecoveryPlan plan = 5;
+    // .pdpb.RecoveryPlan recovery_plan = 5;
 
 
-    pub fn get_plan(&self) -> &RecoveryPlan {
-        self.plan.as_ref().unwrap_or_else(|| RecoveryPlan::default_instance())
+    pub fn get_recovery_plan(&self) -> &RecoveryPlan {
+        self.recovery_plan.as_ref().unwrap_or_else(|| RecoveryPlan::default_instance())
     }
-    pub fn clear_plan(&mut self) {
-        self.plan.clear();
+    pub fn clear_recovery_plan(&mut self) {
+        self.recovery_plan.clear();
     }
 
-    pub fn has_plan(&self) -> bool {
-        self.plan.is_some()
+    pub fn has_recovery_plan(&self) -> bool {
+        self.recovery_plan.is_some()
     }
 
     // Param is passed by value, moved
-    pub fn set_plan(&mut self, v: RecoveryPlan) {
-        self.plan = ::protobuf::SingularPtrField::some(v);
+    pub fn set_recovery_plan(&mut self, v: RecoveryPlan) {
+        self.recovery_plan = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_plan(&mut self) -> &mut RecoveryPlan {
-        if self.plan.is_none() {
-            self.plan.set_default();
+    pub fn mut_recovery_plan(&mut self) -> &mut RecoveryPlan {
+        if self.recovery_plan.is_none() {
+            self.recovery_plan.set_default();
         }
-        self.plan.as_mut().unwrap()
+        self.recovery_plan.as_mut().unwrap()
     }
 
     // Take field
-    pub fn take_plan(&mut self) -> RecoveryPlan {
-        self.plan.take().unwrap_or_else(|| RecoveryPlan::new())
+    pub fn take_recovery_plan(&mut self) -> RecoveryPlan {
+        self.recovery_plan.take().unwrap_or_else(|| RecoveryPlan::new())
     }
 }
 
@@ -16365,7 +16993,7 @@ impl ::protobuf::Message for StoreHeartbeatResponse {
                 return false;
             }
         };
-        for v in &self.plan {
+        for v in &self.recovery_plan {
             if !v.is_initialized() {
                 return false;
             }
@@ -16394,7 +17022,7 @@ impl ::protobuf::Message for StoreHeartbeatResponse {
                     self.require_detailed_report = tmp;
                 },
                 5 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.plan)?;
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.recovery_plan)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -16422,7 +17050,7 @@ impl ::protobuf::Message for StoreHeartbeatResponse {
         if self.require_detailed_report != false {
             my_size += 2;
         }
-        if let Some(ref v) = self.plan.as_ref() {
+        if let Some(ref v) = self.recovery_plan.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
@@ -16448,7 +17076,7 @@ impl ::protobuf::Message for StoreHeartbeatResponse {
         if self.require_detailed_report != false {
             os.write_bool(4, self.require_detailed_report)?;
         }
-        if let Some(ref v) = self.plan.as_ref() {
+        if let Some(ref v) = self.recovery_plan.as_ref() {
             os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
@@ -16504,7 +17132,7 @@ impl ::protobuf::Clear for StoreHeartbeatResponse {
         self.replication_status.clear();
         self.cluster_version.clear();
         self.require_detailed_report = false;
-        self.plan.clear();
+        self.recovery_plan.clear();
         self.unknown_fields.clear();
     }
 }
@@ -16518,7 +17146,7 @@ impl ::protobuf::PbPrint for StoreHeartbeatResponse {
         ::protobuf::PbPrint::fmt(&self.replication_status, "replication_status", buf);
         ::protobuf::PbPrint::fmt(&self.cluster_version, "cluster_version", buf);
         ::protobuf::PbPrint::fmt(&self.require_detailed_report, "require_detailed_report", buf);
-        ::protobuf::PbPrint::fmt(&self.plan, "plan", buf);
+        ::protobuf::PbPrint::fmt(&self.recovery_plan, "recovery_plan", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -16533,7 +17161,7 @@ impl ::std::fmt::Debug for StoreHeartbeatResponse {
         ::protobuf::PbPrint::fmt(&self.replication_status, "replication_status", &mut s);
         ::protobuf::PbPrint::fmt(&self.cluster_version, "cluster_version", &mut s);
         ::protobuf::PbPrint::fmt(&self.require_detailed_report, "require_detailed_report", &mut s);
-        ::protobuf::PbPrint::fmt(&self.plan, "plan", &mut s);
+        ::protobuf::PbPrint::fmt(&self.recovery_plan, "recovery_plan", &mut s);
         write!(f, "{}", s)
     }
 }

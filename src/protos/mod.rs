@@ -33,6 +33,8 @@ mod cdcpb;
 pub 
 mod diagnosticspb_grpc;
 pub 
+mod gcpb_grpc;
+pub 
 mod errorpb;
 pub 
 mod tracepb;
@@ -46,6 +48,8 @@ pub
 mod coprocessor;
 pub 
 mod tracepb_grpc;
+pub 
+mod gcpb;
 pub 
 mod mpp;
 pub 

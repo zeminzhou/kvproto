@@ -266,6 +266,7 @@ pub struct DrAutoSync {
     pub state_id: u64,
     pub wait_sync_timeout_hint: i32,
     pub available_stores: ::std::vec::Vec<u64>,
+    pub pause_region_split: bool,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -377,6 +378,21 @@ impl DrAutoSync {
     pub fn take_available_stores(&mut self) -> ::std::vec::Vec<u64> {
         ::std::mem::replace(&mut self.available_stores, ::std::vec::Vec::new())
     }
+
+    // bool pause_region_split = 6;
+
+
+    pub fn get_pause_region_split(&self) -> bool {
+        self.pause_region_split
+    }
+    pub fn clear_pause_region_split(&mut self) {
+        self.pause_region_split = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_pause_region_split(&mut self, v: bool) {
+        self.pause_region_split = v;
+    }
 }
 
 impl ::protobuf::Message for DrAutoSync {
@@ -411,6 +427,13 @@ impl ::protobuf::Message for DrAutoSync {
                 5 => {
                     ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.available_stores)?;
                 },
+                6 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.pause_region_split = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -438,6 +461,9 @@ impl ::protobuf::Message for DrAutoSync {
         for value in &self.available_stores {
             my_size += ::protobuf::rt::value_size(5, *value, ::protobuf::wire_format::WireTypeVarint);
         };
+        if self.pause_region_split != false {
+            my_size += 2;
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -459,6 +485,9 @@ impl ::protobuf::Message for DrAutoSync {
         for v in &self.available_stores {
             os.write_uint64(5, *v)?;
         };
+        if self.pause_region_split != false {
+            os.write_bool(6, self.pause_region_split)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -526,6 +555,11 @@ impl ::protobuf::Message for DrAutoSync {
                     |m: &DrAutoSync| { &m.available_stores },
                     |m: &mut DrAutoSync| { &mut m.available_stores },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
+                    "pause_region_split",
+                    |m: &DrAutoSync| { &m.pause_region_split },
+                    |m: &mut DrAutoSync| { &mut m.pause_region_split },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<DrAutoSync>(
                     "DrAutoSync",
                     fields,
@@ -553,6 +587,7 @@ impl ::protobuf::Clear for DrAutoSync {
         self.state_id = 0;
         self.wait_sync_timeout_hint = 0;
         self.available_stores.clear();
+        self.pause_region_split = false;
         self.unknown_fields.clear();
     }
 }
@@ -567,6 +602,7 @@ impl ::protobuf::PbPrint for DrAutoSync {
         ::protobuf::PbPrint::fmt(&self.state_id, "state_id", buf);
         ::protobuf::PbPrint::fmt(&self.wait_sync_timeout_hint, "wait_sync_timeout_hint", buf);
         ::protobuf::PbPrint::fmt(&self.available_stores, "available_stores", buf);
+        ::protobuf::PbPrint::fmt(&self.pause_region_split, "pause_region_split", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -582,6 +618,7 @@ impl ::std::fmt::Debug for DrAutoSync {
         ::protobuf::PbPrint::fmt(&self.state_id, "state_id", &mut s);
         ::protobuf::PbPrint::fmt(&self.wait_sync_timeout_hint, "wait_sync_timeout_hint", &mut s);
         ::protobuf::PbPrint::fmt(&self.available_stores, "available_stores", &mut s);
+        ::protobuf::PbPrint::fmt(&self.pause_region_split, "pause_region_split", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -1223,14 +1260,15 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x18replication_modepb.proto\x12\x12replication_modepb\"\x8e\x01\n\x11\
     ReplicationStatus\x127\n\x04mode\x18\x01\x20\x01(\x0e2#.replication_mode\
     pb.ReplicationModeR\x04mode\x12@\n\x0cdr_auto_sync\x18\x02\x20\x01(\x0b2\
-    \x1e.replication_modepb.DRAutoSyncR\ndrAutoSync\"\xdf\x01\n\nDRAutoSync\
+    \x1e.replication_modepb.DRAutoSyncR\ndrAutoSync\"\x8d\x02\n\nDRAutoSync\
     \x12\x1b\n\tlabel_key\x18\x01\x20\x01(\tR\x08labelKey\x129\n\x05state\
     \x18\x02\x20\x01(\x0e2#.replication_modepb.DRAutoSyncStateR\x05state\x12\
     \x19\n\x08state_id\x18\x03\x20\x01(\x04R\x07stateId\x123\n\x16wait_sync_\
     timeout_hint\x18\x04\x20\x01(\x05R\x13waitSyncTimeoutHint\x12)\n\x10avai\
-    lable_stores\x18\x05\x20\x03(\x04R\x0favailableStores\"v\n\x17RegionRepl\
-    icationStatus\x12@\n\x05state\x18\x01\x20\x01(\x0e2*.replication_modepb.\
-    RegionReplicationStateR\x05state\x12\x19\n\x08state_id\x18\x02\x20\x01(\
+    lable_stores\x18\x05\x20\x03(\x04R\x0favailableStores\x12,\n\x12pause_re\
+    gion_split\x18\x06\x20\x01(\x08R\x10pauseRegionSplit\"v\n\x17RegionRepli\
+    cationStatus\x12@\n\x05state\x18\x01\x20\x01(\x0e2*.replication_modepb.R\
+    egionReplicationStateR\x05state\x12\x19\n\x08state_id\x18\x02\x20\x01(\
     \x04R\x07stateId\"m\n\x15StoreDRAutoSyncStatus\x129\n\x05state\x18\x01\
     \x20\x01(\x0e2#.replication_modepb.DRAutoSyncStateR\x05state\x12\x19\n\
     \x08state_id\x18\x02\x20\x01(\x04R\x07stateId*1\n\x0fReplicationMode\x12\
@@ -1238,8 +1276,8 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     SyncState\x12\x08\n\x04SYNC\x10\0\x12\x0e\n\nASYNC_WAIT\x10\x01\x12\t\n\
     \x05ASYNC\x10\x02\x12\x10\n\x0cSYNC_RECOVER\x10\x03*T\n\x16RegionReplica\
     tionState\x12\x0b\n\x07UNKNOWN\x10\0\x12\x13\n\x0fSIMPLE_MAJORITY\x10\
-    \x01\x12\x18\n\x14INTEGRITY_OVER_LABEL\x10\x02J\x88\x10\n\x06\x12\x04\0\
-    \0;\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\0\
+    \x01\x12\x18\n\x14INTEGRITY_OVER_LABEL\x10\x02J\xe5\x10\n\x06\x12\x04\0\
+    \0=\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x01\0\
     \x1b\n\n\n\x02\x05\0\x12\x04\x03\0\x08\x01\n\n\n\x03\x05\0\x01\x12\x03\
     \x03\x05\x14\nB\n\x04\x05\0\x02\0\x12\x03\x05\x04\x11\x1a5\x20The\x20sta\
     ndard\x20mode.\x20Replicate\x20logs\x20to\x20majority\x20peer.\n\n\x0c\n\
@@ -1268,7 +1306,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05\x05\x01\x02\x02\x02\x12\x03\x16\x0c\r\n0\n\x04\x05\x01\x02\x03\x12\
     \x03\x18\x04\x15\x1a#\x20Switching\x20from\x20ASYNC\x20to\x20SYNC\x20mod\
     e\n\n\x0c\n\x05\x05\x01\x02\x03\x01\x12\x03\x18\x04\x10\n\x0c\n\x05\x05\
-    \x01\x02\x03\x02\x12\x03\x18\x13\x14\n-\n\x02\x04\x01\x12\x04\x1c\0&\x01\
+    \x01\x02\x03\x02\x12\x03\x18\x13\x14\n-\n\x02\x04\x01\x12\x04\x1c\0(\x01\
     \x1a!\x20The\x20status\x20of\x20dr-autosync\x20mode.\n\n\n\n\x03\x04\x01\
     \x01\x12\x03\x1c\x08\x12\nK\n\x04\x04\x01\x02\0\x12\x03\x1e\x04\x19\x1a>\
     \x20The\x20key\x20of\x20the\x20label\x20that\x20used\x20for\x20distingui\
@@ -1290,31 +1328,35 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20stores\x20when\x20state\x20is\x20ASYNC\x20or\x20ASYNC_WAIT.\n\n\x0c\
     \n\x05\x04\x01\x02\x04\x04\x12\x03%\x04\x0c\n\x0c\n\x05\x04\x01\x02\x04\
     \x05\x12\x03%\r\x13\n\x0c\n\x05\x04\x01\x02\x04\x01\x12\x03%\x14$\n\x0c\
-    \n\x05\x04\x01\x02\x04\x03\x12\x03%'(\n\n\n\x02\x05\x02\x12\x04(\0/\x01\
-    \n\n\n\x03\x05\x02\x01\x12\x03(\x05\x1b\n,\n\x04\x05\x02\x02\0\x12\x03*\
-    \x04\x10\x1a\x1f\x20The\x20region's\x20state\x20is\x20unknown\n\n\x0c\n\
-    \x05\x05\x02\x02\0\x01\x12\x03*\x04\x0b\n\x0c\n\x05\x05\x02\x02\0\x02\
-    \x12\x03*\x0e\x0f\n*\n\x04\x05\x02\x02\x01\x12\x03,\x04\x18\x1a\x1d\x20L\
-    ogs\x20sync\x20to\x20majority\x20peers\n\n\x0c\n\x05\x05\x02\x02\x01\x01\
-    \x12\x03,\x04\x13\n\x0c\n\x05\x05\x02\x02\x01\x02\x12\x03,\x16\x17\n)\n\
-    \x04\x05\x02\x02\x02\x12\x03.\x04\x1d\x1a\x1c\x20Logs\x20sync\x20to\x20d\
-    ifferent\x20DCs\n\n\x0c\n\x05\x05\x02\x02\x02\x01\x12\x03.\x04\x18\n\x0c\
-    \n\x05\x05\x02\x02\x02\x02\x12\x03.\x1b\x1c\n:\n\x02\x04\x02\x12\x042\06\
-    \x01\x1a.\x20The\x20replication\x20status\x20sync\x20from\x20TiKV\x20to\
-    \x20PD.\n\n\n\n\x03\x04\x02\x01\x12\x032\x08\x1f\n\x0b\n\x04\x04\x02\x02\
-    \0\x12\x033\x04%\n\x0c\n\x05\x04\x02\x02\0\x06\x12\x033\x04\x1a\n\x0c\n\
-    \x05\x04\x02\x02\0\x01\x12\x033\x1b\x20\n\x0c\n\x05\x04\x02\x02\0\x03\
-    \x12\x033#$\nN\n\x04\x04\x02\x02\x01\x12\x035\x04\x18\x1aA\x20Unique\x20\
-    ID\x20of\x20the\x20state,\x20it\x20increases\x20after\x20each\x20state\
-    \x20transfer.\n\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x035\x04\n\n\x0c\n\
-    \x05\x04\x02\x02\x01\x01\x12\x035\x0b\x13\n\x0c\n\x05\x04\x02\x02\x01\
-    \x03\x12\x035\x16\x17\n\n\n\x02\x04\x03\x12\x048\0;\x01\n\n\n\x03\x04\
-    \x03\x01\x12\x038\x08\x1d\n\x0b\n\x04\x04\x03\x02\0\x12\x039\x04\x1e\n\
-    \x0c\n\x05\x04\x03\x02\0\x06\x12\x039\x04\x13\n\x0c\n\x05\x04\x03\x02\0\
-    \x01\x12\x039\x14\x19\n\x0c\n\x05\x04\x03\x02\0\x03\x12\x039\x1c\x1d\n\
-    \x0b\n\x04\x04\x03\x02\x01\x12\x03:\x04\x18\n\x0c\n\x05\x04\x03\x02\x01\
-    \x05\x12\x03:\x04\n\n\x0c\n\x05\x04\x03\x02\x01\x01\x12\x03:\x0b\x13\n\
-    \x0c\n\x05\x04\x03\x02\x01\x03\x12\x03:\x16\x17b\x06proto3\
+    \n\x05\x04\x01\x02\x04\x03\x12\x03%'(\n1\n\x04\x04\x01\x02\x05\x12\x03'\
+    \x04\x20\x1a$\x20Stores\x20should\x20forbid\x20region\x20split.\n\n\x0c\
+    \n\x05\x04\x01\x02\x05\x05\x12\x03'\x04\x08\n\x0c\n\x05\x04\x01\x02\x05\
+    \x01\x12\x03'\t\x1b\n\x0c\n\x05\x04\x01\x02\x05\x03\x12\x03'\x1e\x1f\n\n\
+    \n\x02\x05\x02\x12\x04*\01\x01\n\n\n\x03\x05\x02\x01\x12\x03*\x05\x1b\n,\
+    \n\x04\x05\x02\x02\0\x12\x03,\x04\x10\x1a\x1f\x20The\x20region's\x20stat\
+    e\x20is\x20unknown\n\n\x0c\n\x05\x05\x02\x02\0\x01\x12\x03,\x04\x0b\n\
+    \x0c\n\x05\x05\x02\x02\0\x02\x12\x03,\x0e\x0f\n*\n\x04\x05\x02\x02\x01\
+    \x12\x03.\x04\x18\x1a\x1d\x20Logs\x20sync\x20to\x20majority\x20peers\n\n\
+    \x0c\n\x05\x05\x02\x02\x01\x01\x12\x03.\x04\x13\n\x0c\n\x05\x05\x02\x02\
+    \x01\x02\x12\x03.\x16\x17\n)\n\x04\x05\x02\x02\x02\x12\x030\x04\x1d\x1a\
+    \x1c\x20Logs\x20sync\x20to\x20different\x20DCs\n\n\x0c\n\x05\x05\x02\x02\
+    \x02\x01\x12\x030\x04\x18\n\x0c\n\x05\x05\x02\x02\x02\x02\x12\x030\x1b\
+    \x1c\n:\n\x02\x04\x02\x12\x044\08\x01\x1a.\x20The\x20replication\x20stat\
+    us\x20sync\x20from\x20TiKV\x20to\x20PD.\n\n\n\n\x03\x04\x02\x01\x12\x034\
+    \x08\x1f\n\x0b\n\x04\x04\x02\x02\0\x12\x035\x04%\n\x0c\n\x05\x04\x02\x02\
+    \0\x06\x12\x035\x04\x1a\n\x0c\n\x05\x04\x02\x02\0\x01\x12\x035\x1b\x20\n\
+    \x0c\n\x05\x04\x02\x02\0\x03\x12\x035#$\nN\n\x04\x04\x02\x02\x01\x12\x03\
+    7\x04\x18\x1aA\x20Unique\x20ID\x20of\x20the\x20state,\x20it\x20increases\
+    \x20after\x20each\x20state\x20transfer.\n\n\x0c\n\x05\x04\x02\x02\x01\
+    \x05\x12\x037\x04\n\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x037\x0b\x13\n\
+    \x0c\n\x05\x04\x02\x02\x01\x03\x12\x037\x16\x17\n\n\n\x02\x04\x03\x12\
+    \x04:\0=\x01\n\n\n\x03\x04\x03\x01\x12\x03:\x08\x1d\n\x0b\n\x04\x04\x03\
+    \x02\0\x12\x03;\x04\x1e\n\x0c\n\x05\x04\x03\x02\0\x06\x12\x03;\x04\x13\n\
+    \x0c\n\x05\x04\x03\x02\0\x01\x12\x03;\x14\x19\n\x0c\n\x05\x04\x03\x02\0\
+    \x03\x12\x03;\x1c\x1d\n\x0b\n\x04\x04\x03\x02\x01\x12\x03<\x04\x18\n\x0c\
+    \n\x05\x04\x03\x02\x01\x05\x12\x03<\x04\n\n\x0c\n\x05\x04\x03\x02\x01\
+    \x01\x12\x03<\x0b\x13\n\x0c\n\x05\x04\x03\x02\x01\x03\x12\x03<\x16\x17b\
+    \x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

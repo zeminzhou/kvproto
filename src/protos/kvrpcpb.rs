@@ -30831,6 +30831,1412 @@ impl ::protobuf::reflect::ProtobufValue for RawChecksumResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactError {
+    // message oneof groups
+    pub error: ::std::option::Option<CompactError_oneof_error>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactError {
+    fn default() -> &'a CompactError {
+        <CompactError as ::protobuf::Message>::default_instance()
+    }
+}
+
+#[derive(Clone,PartialEq)]
+pub enum CompactError_oneof_error {
+    ErrInvalidStartKey(CompactErrorInvalidStartKey),
+    ErrPhysicalTableNotExist(CompactErrorPhysicalTableNotExist),
+    ErrCompactInProgress(CompactErrorCompactInProgress),
+    ErrTooManyPendingTasks(CompactErrorTooManyPendingTasks),
+}
+
+impl ::protobuf::PbPrint for CompactError_oneof_error {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        match self {
+            CompactError_oneof_error::ErrInvalidStartKey(v) => ::protobuf::PbPrint::fmt(v, name, buf),
+            CompactError_oneof_error::ErrPhysicalTableNotExist(v) => ::protobuf::PbPrint::fmt(v, name, buf),
+            CompactError_oneof_error::ErrCompactInProgress(v) => ::protobuf::PbPrint::fmt(v, name, buf),
+            CompactError_oneof_error::ErrTooManyPendingTasks(v) => ::protobuf::PbPrint::fmt(v, name, buf),
+        }
+    }
+}
+
+impl CompactError {
+    pub fn new() -> CompactError {
+        ::std::default::Default::default()
+    }
+
+    // .kvrpcpb.CompactErrorInvalidStartKey err_invalid_start_key = 1;
+
+
+    pub fn get_err_invalid_start_key(&self) -> &CompactErrorInvalidStartKey {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(ref v)) => v,
+            _ => CompactErrorInvalidStartKey::default_instance(),
+        }
+    }
+    pub fn clear_err_invalid_start_key(&mut self) {
+        self.error = ::std::option::Option::None;
+    }
+
+    pub fn has_err_invalid_start_key(&self) -> bool {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_err_invalid_start_key(&mut self, v: CompactErrorInvalidStartKey) {
+        self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_err_invalid_start_key(&mut self) -> &mut CompactErrorInvalidStartKey {
+        if let ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(_)) = self.error {
+        } else {
+            self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(CompactErrorInvalidStartKey::new()));
+        }
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_err_invalid_start_key(&mut self) -> CompactErrorInvalidStartKey {
+        if self.has_err_invalid_start_key() {
+            match self.error.take() {
+                ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CompactErrorInvalidStartKey::new()
+        }
+    }
+
+    // .kvrpcpb.CompactErrorPhysicalTableNotExist err_physical_table_not_exist = 2;
+
+
+    pub fn get_err_physical_table_not_exist(&self) -> &CompactErrorPhysicalTableNotExist {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(ref v)) => v,
+            _ => CompactErrorPhysicalTableNotExist::default_instance(),
+        }
+    }
+    pub fn clear_err_physical_table_not_exist(&mut self) {
+        self.error = ::std::option::Option::None;
+    }
+
+    pub fn has_err_physical_table_not_exist(&self) -> bool {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_err_physical_table_not_exist(&mut self, v: CompactErrorPhysicalTableNotExist) {
+        self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_err_physical_table_not_exist(&mut self) -> &mut CompactErrorPhysicalTableNotExist {
+        if let ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(_)) = self.error {
+        } else {
+            self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(CompactErrorPhysicalTableNotExist::new()));
+        }
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_err_physical_table_not_exist(&mut self) -> CompactErrorPhysicalTableNotExist {
+        if self.has_err_physical_table_not_exist() {
+            match self.error.take() {
+                ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CompactErrorPhysicalTableNotExist::new()
+        }
+    }
+
+    // .kvrpcpb.CompactErrorCompactInProgress err_compact_in_progress = 3;
+
+
+    pub fn get_err_compact_in_progress(&self) -> &CompactErrorCompactInProgress {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(ref v)) => v,
+            _ => CompactErrorCompactInProgress::default_instance(),
+        }
+    }
+    pub fn clear_err_compact_in_progress(&mut self) {
+        self.error = ::std::option::Option::None;
+    }
+
+    pub fn has_err_compact_in_progress(&self) -> bool {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_err_compact_in_progress(&mut self, v: CompactErrorCompactInProgress) {
+        self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_err_compact_in_progress(&mut self) -> &mut CompactErrorCompactInProgress {
+        if let ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(_)) = self.error {
+        } else {
+            self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(CompactErrorCompactInProgress::new()));
+        }
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_err_compact_in_progress(&mut self) -> CompactErrorCompactInProgress {
+        if self.has_err_compact_in_progress() {
+            match self.error.take() {
+                ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CompactErrorCompactInProgress::new()
+        }
+    }
+
+    // .kvrpcpb.CompactErrorTooManyPendingTasks err_too_many_pending_tasks = 4;
+
+
+    pub fn get_err_too_many_pending_tasks(&self) -> &CompactErrorTooManyPendingTasks {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(ref v)) => v,
+            _ => CompactErrorTooManyPendingTasks::default_instance(),
+        }
+    }
+    pub fn clear_err_too_many_pending_tasks(&mut self) {
+        self.error = ::std::option::Option::None;
+    }
+
+    pub fn has_err_too_many_pending_tasks(&self) -> bool {
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(..)) => true,
+            _ => false,
+        }
+    }
+
+    // Param is passed by value, moved
+    pub fn set_err_too_many_pending_tasks(&mut self, v: CompactErrorTooManyPendingTasks) {
+        self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(v))
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_err_too_many_pending_tasks(&mut self) -> &mut CompactErrorTooManyPendingTasks {
+        if let ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(_)) = self.error {
+        } else {
+            self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(CompactErrorTooManyPendingTasks::new()));
+        }
+        match self.error {
+            ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(ref mut v)) => v,
+            _ => panic!(),
+        }
+    }
+
+    // Take field
+    pub fn take_err_too_many_pending_tasks(&mut self) -> CompactErrorTooManyPendingTasks {
+        if self.has_err_too_many_pending_tasks() {
+            match self.error.take() {
+                ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(v)) => v,
+                _ => panic!(),
+            }
+        } else {
+            CompactErrorTooManyPendingTasks::new()
+        }
+    }
+}
+
+impl ::protobuf::Message for CompactError {
+    fn is_initialized(&self) -> bool {
+        if let Some(CompactError_oneof_error::ErrInvalidStartKey(ref v)) = self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(CompactError_oneof_error::ErrPhysicalTableNotExist(ref v)) = self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(CompactError_oneof_error::ErrCompactInProgress(ref v)) = self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        if let Some(CompactError_oneof_error::ErrTooManyPendingTasks(ref v)) = self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        }
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrInvalidStartKey(is.read_message()?));
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrPhysicalTableNotExist(is.read_message()?));
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrCompactInProgress(is.read_message()?));
+                },
+                4 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeLengthDelimited {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    self.error = ::std::option::Option::Some(CompactError_oneof_error::ErrTooManyPendingTasks(is.read_message()?));
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let ::std::option::Option::Some(ref v) = self.error {
+            match v {
+                &CompactError_oneof_error::ErrInvalidStartKey(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &CompactError_oneof_error::ErrPhysicalTableNotExist(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &CompactError_oneof_error::ErrCompactInProgress(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+                &CompactError_oneof_error::ErrTooManyPendingTasks(ref v) => {
+                    let len = v.compute_size();
+                    my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+                },
+            };
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let ::std::option::Option::Some(ref v) = self.error {
+            match v {
+                &CompactError_oneof_error::ErrInvalidStartKey(ref v) => {
+                    os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &CompactError_oneof_error::ErrPhysicalTableNotExist(ref v) => {
+                    os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &CompactError_oneof_error::ErrCompactInProgress(ref v) => {
+                    os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+                &CompactError_oneof_error::ErrTooManyPendingTasks(ref v) => {
+                    os.write_tag(4, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+                    os.write_raw_varint32(v.get_cached_size())?;
+                    v.write_to_with_cached_sizes(os)?;
+                },
+            };
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactError {
+        CompactError::new()
+    }
+
+    fn default_instance() -> &'static CompactError {
+        static mut instance: ::protobuf::lazy::Lazy<CompactError> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactError,
+        };
+        unsafe {
+            instance.get(CompactError::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactError {
+    fn clear(&mut self) {
+        self.error = ::std::option::Option::None;
+        self.error = ::std::option::Option::None;
+        self.error = ::std::option::Option::None;
+        self.error = ::std::option::Option::None;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactError {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.error, "error", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CompactError {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.error, "error", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactError {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactErrorInvalidStartKey {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactErrorInvalidStartKey {
+    fn default() -> &'a CompactErrorInvalidStartKey {
+        <CompactErrorInvalidStartKey as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactErrorInvalidStartKey {
+    pub fn new() -> CompactErrorInvalidStartKey {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CompactErrorInvalidStartKey {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactErrorInvalidStartKey {
+        CompactErrorInvalidStartKey::new()
+    }
+
+    fn default_instance() -> &'static CompactErrorInvalidStartKey {
+        static mut instance: ::protobuf::lazy::Lazy<CompactErrorInvalidStartKey> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactErrorInvalidStartKey,
+        };
+        unsafe {
+            instance.get(CompactErrorInvalidStartKey::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactErrorInvalidStartKey {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactErrorInvalidStartKey {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CompactErrorInvalidStartKey {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactErrorInvalidStartKey {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactErrorPhysicalTableNotExist {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactErrorPhysicalTableNotExist {
+    fn default() -> &'a CompactErrorPhysicalTableNotExist {
+        <CompactErrorPhysicalTableNotExist as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactErrorPhysicalTableNotExist {
+    pub fn new() -> CompactErrorPhysicalTableNotExist {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CompactErrorPhysicalTableNotExist {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactErrorPhysicalTableNotExist {
+        CompactErrorPhysicalTableNotExist::new()
+    }
+
+    fn default_instance() -> &'static CompactErrorPhysicalTableNotExist {
+        static mut instance: ::protobuf::lazy::Lazy<CompactErrorPhysicalTableNotExist> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactErrorPhysicalTableNotExist,
+        };
+        unsafe {
+            instance.get(CompactErrorPhysicalTableNotExist::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactErrorPhysicalTableNotExist {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactErrorPhysicalTableNotExist {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CompactErrorPhysicalTableNotExist {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactErrorPhysicalTableNotExist {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactErrorCompactInProgress {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactErrorCompactInProgress {
+    fn default() -> &'a CompactErrorCompactInProgress {
+        <CompactErrorCompactInProgress as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactErrorCompactInProgress {
+    pub fn new() -> CompactErrorCompactInProgress {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CompactErrorCompactInProgress {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactErrorCompactInProgress {
+        CompactErrorCompactInProgress::new()
+    }
+
+    fn default_instance() -> &'static CompactErrorCompactInProgress {
+        static mut instance: ::protobuf::lazy::Lazy<CompactErrorCompactInProgress> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactErrorCompactInProgress,
+        };
+        unsafe {
+            instance.get(CompactErrorCompactInProgress::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactErrorCompactInProgress {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactErrorCompactInProgress {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CompactErrorCompactInProgress {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactErrorCompactInProgress {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactErrorTooManyPendingTasks {
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactErrorTooManyPendingTasks {
+    fn default() -> &'a CompactErrorTooManyPendingTasks {
+        <CompactErrorTooManyPendingTasks as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactErrorTooManyPendingTasks {
+    pub fn new() -> CompactErrorTooManyPendingTasks {
+        ::std::default::Default::default()
+    }
+}
+
+impl ::protobuf::Message for CompactErrorTooManyPendingTasks {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactErrorTooManyPendingTasks {
+        CompactErrorTooManyPendingTasks::new()
+    }
+
+    fn default_instance() -> &'static CompactErrorTooManyPendingTasks {
+        static mut instance: ::protobuf::lazy::Lazy<CompactErrorTooManyPendingTasks> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactErrorTooManyPendingTasks,
+        };
+        unsafe {
+            instance.get(CompactErrorTooManyPendingTasks::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactErrorTooManyPendingTasks {
+    fn clear(&mut self) {
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactErrorTooManyPendingTasks {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+    }
+}
+impl ::std::fmt::Debug for CompactErrorTooManyPendingTasks {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        Ok(())
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactErrorTooManyPendingTasks {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactRequest {
+    // message fields
+    pub start_key: ::std::vec::Vec<u8>,
+    pub physical_table_id: i64,
+    pub logical_table_id: i64,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactRequest {
+    fn default() -> &'a CompactRequest {
+        <CompactRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactRequest {
+    pub fn new() -> CompactRequest {
+        ::std::default::Default::default()
+    }
+
+    // bytes start_key = 1;
+
+
+    pub fn get_start_key(&self) -> &[u8] {
+        &self.start_key
+    }
+    pub fn clear_start_key(&mut self) {
+        self.start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.start_key
+    }
+
+    // Take field
+    pub fn take_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.start_key, ::std::vec::Vec::new())
+    }
+
+    // int64 physical_table_id = 2;
+
+
+    pub fn get_physical_table_id(&self) -> i64 {
+        self.physical_table_id
+    }
+    pub fn clear_physical_table_id(&mut self) {
+        self.physical_table_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_physical_table_id(&mut self, v: i64) {
+        self.physical_table_id = v;
+    }
+
+    // int64 logical_table_id = 3;
+
+
+    pub fn get_logical_table_id(&self) -> i64 {
+        self.logical_table_id
+    }
+    pub fn clear_logical_table_id(&mut self) {
+        self.logical_table_id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_logical_table_id(&mut self, v: i64) {
+        self.logical_table_id = v;
+    }
+}
+
+impl ::protobuf::Message for CompactRequest {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.start_key)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.physical_table_id = tmp;
+                },
+                3 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_int64()?;
+                    self.logical_table_id = tmp;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if !self.start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(1, &self.start_key);
+        }
+        if self.physical_table_id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.physical_table_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.logical_table_id != 0 {
+            my_size += ::protobuf::rt::value_size(3, self.logical_table_id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if !self.start_key.is_empty() {
+            os.write_bytes(1, &self.start_key)?;
+        }
+        if self.physical_table_id != 0 {
+            os.write_int64(2, self.physical_table_id)?;
+        }
+        if self.logical_table_id != 0 {
+            os.write_int64(3, self.logical_table_id)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactRequest {
+        CompactRequest::new()
+    }
+
+    fn default_instance() -> &'static CompactRequest {
+        static mut instance: ::protobuf::lazy::Lazy<CompactRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactRequest,
+        };
+        unsafe {
+            instance.get(CompactRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactRequest {
+    fn clear(&mut self) {
+        self.start_key.clear();
+        self.physical_table_id = 0;
+        self.logical_table_id = 0;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.start_key, "start_key", buf);
+        ::protobuf::PbPrint::fmt(&self.physical_table_id, "physical_table_id", buf);
+        ::protobuf::PbPrint::fmt(&self.logical_table_id, "logical_table_id", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CompactRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.start_key, "start_key", &mut s);
+        ::protobuf::PbPrint::fmt(&self.physical_table_id, "physical_table_id", &mut s);
+        ::protobuf::PbPrint::fmt(&self.logical_table_id, "logical_table_id", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct CompactResponse {
+    // message fields
+    pub error: ::protobuf::SingularPtrField<CompactError>,
+    pub has_remaining: bool,
+    pub compacted_start_key: ::std::vec::Vec<u8>,
+    pub compacted_end_key: ::std::vec::Vec<u8>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a CompactResponse {
+    fn default() -> &'a CompactResponse {
+        <CompactResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl CompactResponse {
+    pub fn new() -> CompactResponse {
+        ::std::default::Default::default()
+    }
+
+    // .kvrpcpb.CompactError error = 1;
+
+
+    pub fn get_error(&self) -> &CompactError {
+        self.error.as_ref().unwrap_or_else(|| CompactError::default_instance())
+    }
+    pub fn clear_error(&mut self) {
+        self.error.clear();
+    }
+
+    pub fn has_error(&self) -> bool {
+        self.error.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_error(&mut self, v: CompactError) {
+        self.error = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_error(&mut self) -> &mut CompactError {
+        if self.error.is_none() {
+            self.error.set_default();
+        }
+        self.error.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_error(&mut self) -> CompactError {
+        self.error.take().unwrap_or_else(|| CompactError::new())
+    }
+
+    // bool has_remaining = 2;
+
+
+    pub fn get_has_remaining(&self) -> bool {
+        self.has_remaining
+    }
+    pub fn clear_has_remaining(&mut self) {
+        self.has_remaining = false;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_has_remaining(&mut self, v: bool) {
+        self.has_remaining = v;
+    }
+
+    // bytes compacted_start_key = 3;
+
+
+    pub fn get_compacted_start_key(&self) -> &[u8] {
+        &self.compacted_start_key
+    }
+    pub fn clear_compacted_start_key(&mut self) {
+        self.compacted_start_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_compacted_start_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.compacted_start_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_compacted_start_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.compacted_start_key
+    }
+
+    // Take field
+    pub fn take_compacted_start_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.compacted_start_key, ::std::vec::Vec::new())
+    }
+
+    // bytes compacted_end_key = 4;
+
+
+    pub fn get_compacted_end_key(&self) -> &[u8] {
+        &self.compacted_end_key
+    }
+    pub fn clear_compacted_end_key(&mut self) {
+        self.compacted_end_key.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_compacted_end_key(&mut self, v: ::std::vec::Vec<u8>) {
+        self.compacted_end_key = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_compacted_end_key(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.compacted_end_key
+    }
+
+    // Take field
+    pub fn take_compacted_end_key(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.compacted_end_key, ::std::vec::Vec::new())
+    }
+}
+
+impl ::protobuf::Message for CompactResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.error {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.error)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_bool()?;
+                    self.has_remaining = tmp;
+                },
+                3 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.compacted_start_key)?;
+                },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.compacted_end_key)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.error.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.has_remaining != false {
+            my_size += 2;
+        }
+        if !self.compacted_start_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.compacted_start_key);
+        }
+        if !self.compacted_end_key.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(4, &self.compacted_end_key);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.error.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.has_remaining != false {
+            os.write_bool(2, self.has_remaining)?;
+        }
+        if !self.compacted_start_key.is_empty() {
+            os.write_bytes(3, &self.compacted_start_key)?;
+        }
+        if !self.compacted_end_key.is_empty() {
+            os.write_bytes(4, &self.compacted_end_key)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> CompactResponse {
+        CompactResponse::new()
+    }
+
+    fn default_instance() -> &'static CompactResponse {
+        static mut instance: ::protobuf::lazy::Lazy<CompactResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const CompactResponse,
+        };
+        unsafe {
+            instance.get(CompactResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for CompactResponse {
+    fn clear(&mut self) {
+        self.error.clear();
+        self.has_remaining = false;
+        self.compacted_start_key.clear();
+        self.compacted_end_key.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for CompactResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.error, "error", buf);
+        ::protobuf::PbPrint::fmt(&self.has_remaining, "has_remaining", buf);
+        ::protobuf::PbPrint::fmt(&self.compacted_start_key, "compacted_start_key", buf);
+        ::protobuf::PbPrint::fmt(&self.compacted_end_key, "compacted_end_key", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for CompactResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.error, "error", &mut s);
+        ::protobuf::PbPrint::fmt(&self.has_remaining, "has_remaining", &mut s);
+        ::protobuf::PbPrint::fmt(&self.compacted_start_key, "compacted_start_key", &mut s);
+        ::protobuf::PbPrint::fmt(&self.compacted_end_key, "compacted_end_key", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for CompactResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum ApiVersion {
     V1 = 0,

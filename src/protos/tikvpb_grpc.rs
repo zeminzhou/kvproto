@@ -387,6 +387,13 @@ const METHOD_TIKV_GET_LOCK_WAIT_INFO: ::grpcio::Method<super::kvrpcpb::GetLockWa
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_COMPACT: ::grpcio::Method<super::kvrpcpb::CompactRequest, super::kvrpcpb::CompactResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/Compact",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
@@ -1190,6 +1197,22 @@ impl TikvClient {
     pub fn get_lock_wait_info_async(&self, req: &super::kvrpcpb::GetLockWaitInfoRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::GetLockWaitInfoResponse>> {
         self.get_lock_wait_info_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn compact_opt(&self, req: &super::kvrpcpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::CompactResponse> {
+        self.client.unary_call(&METHOD_TIKV_COMPACT, req, opt)
+    }
+
+    pub fn compact(&self, req: &super::kvrpcpb::CompactRequest) -> ::grpcio::Result<super::kvrpcpb::CompactResponse> {
+        self.compact_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn compact_async_opt(&self, req: &super::kvrpcpb::CompactRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::CompactResponse>> {
+        self.client.unary_call_async(&METHOD_TIKV_COMPACT, req, opt)
+    }
+
+    pub fn compact_async(&self, req: &super::kvrpcpb::CompactRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::CompactResponse>> {
+        self.compact_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -1353,6 +1376,9 @@ pub trait Tikv {
         grpcio::unimplemented_call!(ctx, sink)
     }
     fn get_lock_wait_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::GetLockWaitInfoRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetLockWaitInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn compact(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CompactRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CompactResponse>) {
         grpcio::unimplemented_call!(ctx, sink)
     }
 }
@@ -1567,9 +1593,13 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     builder = builder.add_unary_handler(&METHOD_TIKV_GET_STORE_SAFE_TS, move |ctx, req, resp| {
         instance.get_store_safe_ts(ctx, req, resp)
     });
-    let mut instance = s;
+    let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_GET_LOCK_WAIT_INFO, move |ctx, req, resp| {
         instance.get_lock_wait_info(ctx, req, resp)
+    });
+    let mut instance = s;
+    builder = builder.add_unary_handler(&METHOD_TIKV_COMPACT, move |ctx, req, resp| {
+        instance.compact(ctx, req, resp)
     });
     builder.build()
 }
