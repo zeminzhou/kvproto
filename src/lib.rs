@@ -5,7 +5,7 @@
 #[allow(bare_trait_objects)]
 #[allow(deprecated)]
 mod protos {
-    include!(concat!(env!("OUT_DIR"), "/protos/mod.rs"));
+    include!("./protos/mod.rs");
 
     use raft_proto::eraftpb;
 }
