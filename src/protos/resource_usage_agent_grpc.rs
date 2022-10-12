@@ -42,13 +42,15 @@ impl ResourceUsageAgentClient {
     pub fn report(&self) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::resource_usage_agent::ResourceUsageRecord>, ::grpcio::ClientCStreamReceiver<super::resource_usage_agent::EmptyResponse>)> {
         self.report_opt(::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ResourceUsageAgent {
-    fn report(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::resource_usage_agent::ResourceUsageRecord>, sink: ::grpcio::ClientStreamingSink<super::resource_usage_agent::EmptyResponse>);
+    fn report(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::resource_usage_agent::ResourceUsageRecord>, sink: ::grpcio::ClientStreamingSink<super::resource_usage_agent::EmptyResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_resource_usage_agent<S: ResourceUsageAgent + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -86,13 +88,15 @@ impl ResourceMeteringPubSubClient {
     pub fn subscribe(&self, req: &super::resource_usage_agent::ResourceMeteringRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::resource_usage_agent::ResourceUsageRecord>> {
         self.subscribe_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ResourceMeteringPubSub {
-    fn subscribe(&mut self, ctx: ::grpcio::RpcContext, req: super::resource_usage_agent::ResourceMeteringRequest, sink: ::grpcio::ServerStreamingSink<super::resource_usage_agent::ResourceUsageRecord>);
+    fn subscribe(&mut self, ctx: ::grpcio::RpcContext, _req: super::resource_usage_agent::ResourceMeteringRequest, sink: ::grpcio::ServerStreamingSink<super::resource_usage_agent::ResourceUsageRecord>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_resource_metering_pub_sub<S: ResourceMeteringPubSub + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

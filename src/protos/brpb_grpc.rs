@@ -42,13 +42,15 @@ impl BackupClient {
     pub fn backup(&self, req: &super::brpb::BackupRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::brpb::BackupResponse>> {
         self.backup_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Backup {
-    fn backup(&mut self, ctx: ::grpcio::RpcContext, req: super::brpb::BackupRequest, sink: ::grpcio::ServerStreamingSink<super::brpb::BackupResponse>);
+    fn backup(&mut self, ctx: ::grpcio::RpcContext, _req: super::brpb::BackupRequest, sink: ::grpcio::ServerStreamingSink<super::brpb::BackupResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_backup<S: Backup + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -117,14 +119,18 @@ impl ExternalStorageClient {
     pub fn save_async(&self, req: &super::brpb::ExternalStorageSaveRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::brpb::ExternalStorageSaveResponse>> {
         self.save_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ExternalStorage {
-    fn restore(&mut self, ctx: ::grpcio::RpcContext, req: super::brpb::ExternalStorageRestoreRequest, sink: ::grpcio::UnarySink<super::brpb::ExternalStorageRestoreResponse>);
-    fn save(&mut self, ctx: ::grpcio::RpcContext, req: super::brpb::ExternalStorageSaveRequest, sink: ::grpcio::UnarySink<super::brpb::ExternalStorageSaveResponse>);
+    fn restore(&mut self, ctx: ::grpcio::RpcContext, _req: super::brpb::ExternalStorageRestoreRequest, sink: ::grpcio::UnarySink<super::brpb::ExternalStorageRestoreResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn save(&mut self, ctx: ::grpcio::RpcContext, _req: super::brpb::ExternalStorageSaveRequest, sink: ::grpcio::UnarySink<super::brpb::ExternalStorageSaveResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_external_storage<S: ExternalStorage + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

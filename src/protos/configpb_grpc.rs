@@ -142,17 +142,27 @@ impl ConfigClient {
     pub fn delete_async(&self, req: &super::configpb::DeleteRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::configpb::DeleteResponse>> {
         self.delete_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Config {
-    fn create(&mut self, ctx: ::grpcio::RpcContext, req: super::configpb::CreateRequest, sink: ::grpcio::UnarySink<super::configpb::CreateResponse>);
-    fn get_all(&mut self, ctx: ::grpcio::RpcContext, req: super::configpb::GetAllRequest, sink: ::grpcio::UnarySink<super::configpb::GetAllResponse>);
-    fn get(&mut self, ctx: ::grpcio::RpcContext, req: super::configpb::GetRequest, sink: ::grpcio::UnarySink<super::configpb::GetResponse>);
-    fn update(&mut self, ctx: ::grpcio::RpcContext, req: super::configpb::UpdateRequest, sink: ::grpcio::UnarySink<super::configpb::UpdateResponse>);
-    fn delete(&mut self, ctx: ::grpcio::RpcContext, req: super::configpb::DeleteRequest, sink: ::grpcio::UnarySink<super::configpb::DeleteResponse>);
+    fn create(&mut self, ctx: ::grpcio::RpcContext, _req: super::configpb::CreateRequest, sink: ::grpcio::UnarySink<super::configpb::CreateResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_all(&mut self, ctx: ::grpcio::RpcContext, _req: super::configpb::GetAllRequest, sink: ::grpcio::UnarySink<super::configpb::GetAllResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get(&mut self, ctx: ::grpcio::RpcContext, _req: super::configpb::GetRequest, sink: ::grpcio::UnarySink<super::configpb::GetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update(&mut self, ctx: ::grpcio::RpcContext, _req: super::configpb::UpdateRequest, sink: ::grpcio::UnarySink<super::configpb::UpdateResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn delete(&mut self, ctx: ::grpcio::RpcContext, _req: super::configpb::DeleteRequest, sink: ::grpcio::UnarySink<super::configpb::DeleteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_config<S: Config + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

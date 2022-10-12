@@ -410,29 +410,63 @@ impl DebugClient {
     pub fn reset_to_version_async(&self, req: &super::debugpb::ResetToVersionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::ResetToVersionResponse>> {
         self.reset_to_version_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Debug {
-    fn get(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRequest, sink: ::grpcio::UnarySink<super::debugpb::GetResponse>);
-    fn raft_log(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RaftLogRequest, sink: ::grpcio::UnarySink<super::debugpb::RaftLogResponse>);
-    fn region_info(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionInfoResponse>);
-    fn region_size(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>);
-    fn scan_mvcc(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>);
-    fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>);
-    fn inject_fail_point(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>);
-    fn recover_fail_point(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>);
-    fn list_fail_points(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ListFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::ListFailPointsResponse>);
-    fn get_metrics(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::debugpb::GetMetricsResponse>);
-    fn check_region_consistency(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>);
-    fn modify_tikv_config(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ModifyTikvConfigRequest, sink: ::grpcio::UnarySink<super::debugpb::ModifyTikvConfigResponse>);
-    fn get_region_properties(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRegionPropertiesRequest, sink: ::grpcio::UnarySink<super::debugpb::GetRegionPropertiesResponse>);
-    fn get_store_info(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetStoreInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::GetStoreInfoResponse>);
-    fn get_cluster_info(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetClusterInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::GetClusterInfoResponse>);
-    fn get_all_regions_in_store(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetAllRegionsInStoreRequest, sink: ::grpcio::UnarySink<super::debugpb::GetAllRegionsInStoreResponse>);
-    fn reset_to_version(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ResetToVersionRequest, sink: ::grpcio::UnarySink<super::debugpb::ResetToVersionResponse>);
+    fn get(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetRequest, sink: ::grpcio::UnarySink<super::debugpb::GetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raft_log(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::RaftLogRequest, sink: ::grpcio::UnarySink<super::debugpb::RaftLogResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn region_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::RegionInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn region_size(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::RegionSizeRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionSizeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn scan_mvcc(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::ScanMvccRequest, sink: ::grpcio::ServerStreamingSink<super::debugpb::ScanMvccResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn compact(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::CompactRequest, sink: ::grpcio::UnarySink<super::debugpb::CompactResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn inject_fail_point(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::InjectFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::InjectFailPointResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn recover_fail_point(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::RecoverFailPointRequest, sink: ::grpcio::UnarySink<super::debugpb::RecoverFailPointResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn list_fail_points(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::ListFailPointsRequest, sink: ::grpcio::UnarySink<super::debugpb::ListFailPointsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_metrics(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::debugpb::GetMetricsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn check_region_consistency(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn modify_tikv_config(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::ModifyTikvConfigRequest, sink: ::grpcio::UnarySink<super::debugpb::ModifyTikvConfigResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_region_properties(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetRegionPropertiesRequest, sink: ::grpcio::UnarySink<super::debugpb::GetRegionPropertiesResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_store_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetStoreInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::GetStoreInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_cluster_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetClusterInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::GetClusterInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_all_regions_in_store(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::GetAllRegionsInStoreRequest, sink: ::grpcio::UnarySink<super::debugpb::GetAllRegionsInStoreResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn reset_to_version(&mut self, ctx: ::grpcio::RpcContext, _req: super::debugpb::ResetToVersionRequest, sink: ::grpcio::UnarySink<super::debugpb::ResetToVersionResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

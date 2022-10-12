@@ -249,22 +249,42 @@ impl ImportKvClient {
     pub fn get_metrics_async(&self, req: &super::import_kvpb::GetMetricsRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_kvpb::GetMetricsResponse>> {
         self.get_metrics_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ImportKv {
-    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_kvpb::SwitchModeResponse>);
-    fn open_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::OpenEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::OpenEngineResponse>);
-    fn write_engine(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_kvpb::WriteEngineRequest>, sink: ::grpcio::ClientStreamingSink<super::import_kvpb::WriteEngineResponse>);
-    fn write_engine_v3(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::WriteEngineV3Request, sink: ::grpcio::UnarySink<super::import_kvpb::WriteEngineResponse>);
-    fn close_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CloseEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CloseEngineResponse>);
-    fn import_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::ImportEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::ImportEngineResponse>);
-    fn cleanup_engine(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CleanupEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CleanupEngineResponse>);
-    fn compact_cluster(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::CompactClusterRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CompactClusterResponse>);
-    fn get_version(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::GetVersionRequest, sink: ::grpcio::UnarySink<super::import_kvpb::GetVersionResponse>);
-    fn get_metrics(&mut self, ctx: ::grpcio::RpcContext, req: super::import_kvpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::import_kvpb::GetMetricsResponse>);
+    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_kvpb::SwitchModeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn open_engine(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::OpenEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::OpenEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn write_engine(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::import_kvpb::WriteEngineRequest>, sink: ::grpcio::ClientStreamingSink<super::import_kvpb::WriteEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn write_engine_v3(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::WriteEngineV3Request, sink: ::grpcio::UnarySink<super::import_kvpb::WriteEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn close_engine(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::CloseEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CloseEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn import_engine(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::ImportEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::ImportEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn cleanup_engine(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::CleanupEngineRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CleanupEngineResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn compact_cluster(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::CompactClusterRequest, sink: ::grpcio::UnarySink<super::import_kvpb::CompactClusterResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_version(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::GetVersionRequest, sink: ::grpcio::UnarySink<super::import_kvpb::GetVersionResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_metrics(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_kvpb::GetMetricsRequest, sink: ::grpcio::UnarySink<super::import_kvpb::GetMetricsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_import_kv<S: ImportKv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

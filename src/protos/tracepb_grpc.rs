@@ -42,13 +42,15 @@ impl TraceRecordPubSubClient {
     pub fn subscribe(&self, req: &super::tracepb::TraceRecordRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::tracepb::TraceRecord>> {
         self.subscribe_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait TraceRecordPubSub {
-    fn subscribe(&mut self, ctx: ::grpcio::RpcContext, req: super::tracepb::TraceRecordRequest, sink: ::grpcio::ServerStreamingSink<super::tracepb::TraceRecord>);
+    fn subscribe(&mut self, ctx: ::grpcio::RpcContext, _req: super::tracepb::TraceRecordRequest, sink: ::grpcio::ServerStreamingSink<super::tracepb::TraceRecord>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_trace_record_pub_sub<S: TraceRecordPubSub + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

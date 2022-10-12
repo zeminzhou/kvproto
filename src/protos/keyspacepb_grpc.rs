@@ -65,14 +65,18 @@ impl KeyspaceClient {
     pub fn watch_keyspaces(&self, req: &super::keyspacepb::WatchKeyspacesRequest) -> ::grpcio::Result<::grpcio::ClientSStreamReceiver<super::keyspacepb::WatchKeyspacesResponse>> {
         self.watch_keyspaces_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Keyspace {
-    fn load_keyspace(&mut self, ctx: ::grpcio::RpcContext, req: super::keyspacepb::LoadKeyspaceRequest, sink: ::grpcio::UnarySink<super::keyspacepb::LoadKeyspaceResponse>);
-    fn watch_keyspaces(&mut self, ctx: ::grpcio::RpcContext, req: super::keyspacepb::WatchKeyspacesRequest, sink: ::grpcio::ServerStreamingSink<super::keyspacepb::WatchKeyspacesResponse>);
+    fn load_keyspace(&mut self, ctx: ::grpcio::RpcContext, _req: super::keyspacepb::LoadKeyspaceRequest, sink: ::grpcio::UnarySink<super::keyspacepb::LoadKeyspaceResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn watch_keyspaces(&mut self, ctx: ::grpcio::RpcContext, _req: super::keyspacepb::WatchKeyspacesRequest, sink: ::grpcio::ServerStreamingSink<super::keyspacepb::WatchKeyspacesResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_keyspace<S: Keyspace + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
