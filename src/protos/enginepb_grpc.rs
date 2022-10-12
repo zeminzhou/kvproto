@@ -57,14 +57,18 @@ impl EngineClient {
     pub fn apply_snapshot(&self) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::enginepb::SnapshotRequest>, ::grpcio::ClientCStreamReceiver<super::enginepb::SnapshotDone>)> {
         self.apply_snapshot_opt(::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Engine {
-    fn apply_command_batch(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::enginepb::CommandRequestBatch>, sink: ::grpcio::DuplexSink<super::enginepb::CommandResponseBatch>);
-    fn apply_snapshot(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::enginepb::SnapshotRequest>, sink: ::grpcio::ClientStreamingSink<super::enginepb::SnapshotDone>);
+    fn apply_command_batch(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::enginepb::CommandRequestBatch>, sink: ::grpcio::DuplexSink<super::enginepb::CommandResponseBatch>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn apply_snapshot(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::enginepb::SnapshotRequest>, sink: ::grpcio::ClientStreamingSink<super::enginepb::SnapshotDone>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_engine<S: Engine + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

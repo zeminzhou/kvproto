@@ -1213,66 +1213,174 @@ impl TikvClient {
     pub fn compact_async(&self, req: &super::kvrpcpb::CompactRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::CompactResponse>> {
         self.compact_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Tikv {
-    fn kv_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetResponse>);
-    fn kv_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanResponse>);
-    fn kv_prewrite(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PrewriteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>);
-    fn kv_pessimistic_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PessimisticLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticLockResponse>);
-    fn kv_pessimistic_rollback(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PessimisticRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticRollbackResponse>);
-    fn kv_txn_heart_beat(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::TxnHeartBeatRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::TxnHeartBeatResponse>);
-    fn kv_check_txn_status(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CheckTxnStatusRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckTxnStatusResponse>);
-    fn kv_check_secondary_locks(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CheckSecondaryLocksRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckSecondaryLocksResponse>);
-    fn kv_commit(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CommitRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CommitResponse>);
-    fn kv_import(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ImportRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ImportResponse>);
-    fn kv_cleanup(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CleanupRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CleanupResponse>);
-    fn kv_batch_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchGetResponse>);
-    fn kv_batch_rollback(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchRollbackResponse>);
-    fn kv_scan_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>);
-    fn kv_resolve_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
-    fn kv_gc(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GcRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GcResponse>);
-    fn kv_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
-    fn raw_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
-    fn raw_batch_get(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchGetResponse>);
-    fn raw_put(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>);
-    fn raw_batch_put(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchPutResponse>);
-    fn raw_delete(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>);
-    fn raw_batch_delete(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchDeleteResponse>);
-    fn raw_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>);
-    fn raw_delete_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteRangeResponse>);
-    fn raw_batch_scan(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawBatchScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchScanResponse>);
-    fn raw_get_key_ttl(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetKeyTtlRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetKeyTtlResponse>);
-    fn raw_compare_and_swap(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawCasRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawCasResponse>);
-    fn raw_checksum(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawChecksumRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawChecksumResponse>);
-    fn unsafe_destroy_range(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::UnsafeDestroyRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::UnsafeDestroyRangeResponse>);
-    fn register_lock_observer(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RegisterLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RegisterLockObserverResponse>);
-    fn check_lock_observer(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CheckLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckLockObserverResponse>);
-    fn remove_lock_observer(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RemoveLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RemoveLockObserverResponse>);
-    fn physical_scan_lock(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::PhysicalScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PhysicalScanLockResponse>);
-    fn coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>);
-    fn coprocessor_stream(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>);
-    fn batch_coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::coprocessor::BatchRequest, sink: ::grpcio::ServerStreamingSink<super::coprocessor::BatchResponse>);
-    fn raw_coprocessor(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawCoprocessorRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawCoprocessorResponse>);
-    fn raft(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
-    fn batch_raft(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchRaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
-    fn snapshot(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
-    fn split_region(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>);
-    fn read_index(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ReadIndexRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ReadIndexResponse>);
-    fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
-    fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
-    fn batch_commands(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchCommandsRequest>, sink: ::grpcio::DuplexSink<super::tikvpb::BatchCommandsResponse>);
-    fn dispatch_mpp_task(&mut self, ctx: ::grpcio::RpcContext, req: super::mpp::DispatchTaskRequest, sink: ::grpcio::UnarySink<super::mpp::DispatchTaskResponse>);
-    fn cancel_mpp_task(&mut self, ctx: ::grpcio::RpcContext, req: super::mpp::CancelTaskRequest, sink: ::grpcio::UnarySink<super::mpp::CancelTaskResponse>);
-    fn establish_mpp_connection(&mut self, ctx: ::grpcio::RpcContext, req: super::mpp::EstablishMppConnectionRequest, sink: ::grpcio::ServerStreamingSink<super::mpp::MppDataPacket>);
-    fn is_alive(&mut self, ctx: ::grpcio::RpcContext, req: super::mpp::IsAliveRequest, sink: ::grpcio::UnarySink<super::mpp::IsAliveResponse>);
-    fn check_leader(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CheckLeaderRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckLeaderResponse>);
-    fn get_store_safe_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::StoreSafeTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::StoreSafeTsResponse>);
-    fn get_lock_wait_info(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GetLockWaitInfoRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetLockWaitInfoResponse>);
-    fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::CompactRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CompactResponse>);
+    fn kv_get(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::GetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_scan(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::ScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_prewrite(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::PrewriteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PrewriteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_pessimistic_lock(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::PessimisticLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticLockResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_pessimistic_rollback(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::PessimisticRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PessimisticRollbackResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_txn_heart_beat(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::TxnHeartBeatRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::TxnHeartBeatResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_check_txn_status(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CheckTxnStatusRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckTxnStatusResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_check_secondary_locks(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CheckSecondaryLocksRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckSecondaryLocksResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_commit(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CommitRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CommitResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_import(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::ImportRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ImportResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_cleanup(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CleanupRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CleanupResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_batch_get(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::BatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchGetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_batch_rollback(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::BatchRollbackRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::BatchRollbackResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_scan_lock(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_resolve_lock(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_gc(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::GcRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GcResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn kv_delete_range(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_get(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_batch_get(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawBatchGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchGetResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_put(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_batch_put(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawBatchPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchPutResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_delete(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_batch_delete(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawBatchDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchDeleteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_scan(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawScanResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_delete_range(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawDeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteRangeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_batch_scan(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawBatchScanRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawBatchScanResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_get_key_ttl(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawGetKeyTtlRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetKeyTtlResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_compare_and_swap(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawCasRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawCasResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_checksum(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawChecksumRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawChecksumResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn unsafe_destroy_range(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::UnsafeDestroyRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::UnsafeDestroyRangeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn register_lock_observer(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RegisterLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RegisterLockObserverResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn check_lock_observer(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CheckLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckLockObserverResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn remove_lock_observer(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RemoveLockObserverRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RemoveLockObserverResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn physical_scan_lock(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::PhysicalScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::PhysicalScanLockResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn coprocessor(&mut self, ctx: ::grpcio::RpcContext, _req: super::coprocessor::Request, sink: ::grpcio::UnarySink<super::coprocessor::Response>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn coprocessor_stream(&mut self, ctx: ::grpcio::RpcContext, _req: super::coprocessor::Request, sink: ::grpcio::ServerStreamingSink<super::coprocessor::Response>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn batch_coprocessor(&mut self, ctx: ::grpcio::RpcContext, _req: super::coprocessor::BatchRequest, sink: ::grpcio::ServerStreamingSink<super::coprocessor::BatchResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_coprocessor(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::RawCoprocessorRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawCoprocessorResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raft(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn batch_raft(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::tikvpb::BatchRaftMessage>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn snapshot(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn split_region(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::SplitRegionRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::SplitRegionResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn read_index(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::ReadIndexRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ReadIndexResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn batch_commands(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::tikvpb::BatchCommandsRequest>, sink: ::grpcio::DuplexSink<super::tikvpb::BatchCommandsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn dispatch_mpp_task(&mut self, ctx: ::grpcio::RpcContext, _req: super::mpp::DispatchTaskRequest, sink: ::grpcio::UnarySink<super::mpp::DispatchTaskResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn cancel_mpp_task(&mut self, ctx: ::grpcio::RpcContext, _req: super::mpp::CancelTaskRequest, sink: ::grpcio::UnarySink<super::mpp::CancelTaskResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn establish_mpp_connection(&mut self, ctx: ::grpcio::RpcContext, _req: super::mpp::EstablishMppConnectionRequest, sink: ::grpcio::ServerStreamingSink<super::mpp::MppDataPacket>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn is_alive(&mut self, ctx: ::grpcio::RpcContext, _req: super::mpp::IsAliveRequest, sink: ::grpcio::UnarySink<super::mpp::IsAliveResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn check_leader(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CheckLeaderRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CheckLeaderResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_store_safe_ts(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::StoreSafeTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::StoreSafeTsResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_lock_wait_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::GetLockWaitInfoRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GetLockWaitInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn compact(&mut self, ctx: ::grpcio::RpcContext, _req: super::kvrpcpb::CompactRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::CompactResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

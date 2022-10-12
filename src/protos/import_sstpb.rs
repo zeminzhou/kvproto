@@ -2654,6 +2654,7 @@ pub struct DownloadRequest {
     pub storage_backend: ::protobuf::SingularPtrField<super::brpb::StorageBackend>,
     pub is_raw_kv: bool,
     pub cipher_info: ::protobuf::SingularPtrField<super::brpb::CipherInfo>,
+    pub request_type: DownloadRequestType,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -2842,6 +2843,21 @@ impl DownloadRequest {
     pub fn take_cipher_info(&mut self) -> super::brpb::CipherInfo {
         self.cipher_info.take().unwrap_or_else(|| super::brpb::CipherInfo::new())
     }
+
+    // .import_sstpb.DownloadRequestType request_type = 17;
+
+
+    pub fn get_request_type(&self) -> DownloadRequestType {
+        self.request_type
+    }
+    pub fn clear_request_type(&mut self) {
+        self.request_type = DownloadRequestType::Legacy;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_request_type(&mut self, v: DownloadRequestType) {
+        self.request_type = v;
+    }
 }
 
 impl ::protobuf::Message for DownloadRequest {
@@ -2895,6 +2911,9 @@ impl ::protobuf::Message for DownloadRequest {
                 16 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cipher_info)?;
                 },
+                17 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.request_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -2929,6 +2948,9 @@ impl ::protobuf::Message for DownloadRequest {
             let len = v.compute_size();
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if self.request_type != DownloadRequestType::Legacy {
+            my_size += ::protobuf::rt::enum_size(17, self.request_type);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -2960,6 +2982,9 @@ impl ::protobuf::Message for DownloadRequest {
             os.write_tag(16, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        if self.request_type != DownloadRequestType::Legacy {
+            os.write_enum(17, self.request_type.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3014,6 +3039,7 @@ impl ::protobuf::Clear for DownloadRequest {
         self.storage_backend.clear();
         self.is_raw_kv = false;
         self.cipher_info.clear();
+        self.request_type = DownloadRequestType::Legacy;
         self.unknown_fields.clear();
     }
 }
@@ -3029,6 +3055,7 @@ impl ::protobuf::PbPrint for DownloadRequest {
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
         ::protobuf::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", buf);
+        ::protobuf::PbPrint::fmt(&self.request_type, "request_type", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -3045,6 +3072,7 @@ impl ::std::fmt::Debug for DownloadRequest {
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
         ::protobuf::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", &mut s);
+        ::protobuf::PbPrint::fmt(&self.request_type, "request_type", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -7928,6 +7956,60 @@ impl ::std::default::Default for SwitchMode {
 }
 
 impl ::protobuf::reflect::ProtobufValue for SwitchMode {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum DownloadRequestType {
+    Legacy = 0,
+    Keyspace = 1,
+}
+
+impl ::protobuf::ProtobufEnum for DownloadRequestType {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<DownloadRequestType> {
+        match value {
+            0 => ::std::option::Option::Some(DownloadRequestType::Legacy),
+            1 => ::std::option::Option::Some(DownloadRequestType::Keyspace),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [DownloadRequestType] = &[
+            DownloadRequestType::Legacy,
+            DownloadRequestType::Keyspace,
+        ];
+        values
+    }
+}
+
+impl ::std::marker::Copy for DownloadRequestType {
+}
+
+impl ::protobuf::PbPrint for DownloadRequestType {
+    fn fmt(&self, name: &str, buf: &mut String) {
+        use std::fmt::Write;
+        if *self == DownloadRequestType::default() {
+            return;
+        }
+        ::protobuf::push_field_start(name, buf);
+        write!(buf, "{:?}", self).unwrap();
+    }
+}
+
+impl ::std::default::Default for DownloadRequestType {
+    fn default() -> Self {
+        DownloadRequestType::Legacy
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for DownloadRequestType {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
     }

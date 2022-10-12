@@ -119,16 +119,24 @@ impl GcClient {
     pub fn update_service_safe_point_async(&self, req: &super::gcpb::UpdateServiceSafePointRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::gcpb::UpdateServiceSafePointResponse>> {
         self.update_service_safe_point_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Gc {
-    fn list_key_spaces(&mut self, ctx: ::grpcio::RpcContext, req: super::gcpb::ListKeySpacesRequest, sink: ::grpcio::UnarySink<super::gcpb::ListKeySpacesResponse>);
-    fn get_min_service_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::gcpb::GetMinServiceSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::GetMinServiceSafePointResponse>);
-    fn update_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::gcpb::UpdateGcSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::UpdateGcSafePointResponse>);
-    fn update_service_safe_point(&mut self, ctx: ::grpcio::RpcContext, req: super::gcpb::UpdateServiceSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::UpdateServiceSafePointResponse>);
+    fn list_key_spaces(&mut self, ctx: ::grpcio::RpcContext, _req: super::gcpb::ListKeySpacesRequest, sink: ::grpcio::UnarySink<super::gcpb::ListKeySpacesResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn get_min_service_safe_point(&mut self, ctx: ::grpcio::RpcContext, _req: super::gcpb::GetMinServiceSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::GetMinServiceSafePointResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_gc_safe_point(&mut self, ctx: ::grpcio::RpcContext, _req: super::gcpb::UpdateGcSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::UpdateGcSafePointResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn update_service_safe_point(&mut self, ctx: ::grpcio::RpcContext, _req: super::gcpb::UpdateServiceSafePointRequest, sink: ::grpcio::UnarySink<super::gcpb::UpdateServiceSafePointResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_gc<S: Gc + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

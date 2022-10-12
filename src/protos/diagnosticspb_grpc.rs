@@ -65,14 +65,18 @@ impl DiagnosticsClient {
     pub fn server_info_async(&self, req: &super::diagnosticspb::ServerInfoRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::diagnosticspb::ServerInfoResponse>> {
         self.server_info_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Diagnostics {
-    fn search_log(&mut self, ctx: ::grpcio::RpcContext, req: super::diagnosticspb::SearchLogRequest, sink: ::grpcio::ServerStreamingSink<super::diagnosticspb::SearchLogResponse>);
-    fn server_info(&mut self, ctx: ::grpcio::RpcContext, req: super::diagnosticspb::ServerInfoRequest, sink: ::grpcio::UnarySink<super::diagnosticspb::ServerInfoResponse>);
+    fn search_log(&mut self, ctx: ::grpcio::RpcContext, _req: super::diagnosticspb::SearchLogRequest, sink: ::grpcio::ServerStreamingSink<super::diagnosticspb::SearchLogResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn server_info(&mut self, ctx: ::grpcio::RpcContext, _req: super::diagnosticspb::ServerInfoRequest, sink: ::grpcio::UnarySink<super::diagnosticspb::ServerInfoResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_diagnostics<S: Diagnostics + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

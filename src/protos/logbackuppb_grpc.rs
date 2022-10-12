@@ -50,13 +50,15 @@ impl LogBackupClient {
     pub fn get_last_flush_ts_of_region_async(&self, req: &super::logbackuppb::GetLastFlushTsOfRegionRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::logbackuppb::GetLastFlushTsOfRegionResponse>> {
         self.get_last_flush_ts_of_region_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait LogBackup {
-    fn get_last_flush_ts_of_region(&mut self, ctx: ::grpcio::RpcContext, req: super::logbackuppb::GetLastFlushTsOfRegionRequest, sink: ::grpcio::UnarySink<super::logbackuppb::GetLastFlushTsOfRegionResponse>);
+    fn get_last_flush_ts_of_region(&mut self, ctx: ::grpcio::RpcContext, _req: super::logbackuppb::GetLastFlushTsOfRegionRequest, sink: ::grpcio::UnarySink<super::logbackuppb::GetLastFlushTsOfRegionResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_log_backup<S: LogBackup + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

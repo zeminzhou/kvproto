@@ -65,14 +65,18 @@ impl DeadlockClient {
     pub fn detect(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::deadlock::DeadlockRequest>, ::grpcio::ClientDuplexReceiver<super::deadlock::DeadlockResponse>)> {
         self.detect_opt(::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait Deadlock {
-    fn get_wait_for_entries(&mut self, ctx: ::grpcio::RpcContext, req: super::deadlock::WaitForEntriesRequest, sink: ::grpcio::UnarySink<super::deadlock::WaitForEntriesResponse>);
-    fn detect(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::deadlock::DeadlockRequest>, sink: ::grpcio::DuplexSink<super::deadlock::DeadlockResponse>);
+    fn get_wait_for_entries(&mut self, ctx: ::grpcio::RpcContext, _req: super::deadlock::WaitForEntriesRequest, sink: ::grpcio::UnarySink<super::deadlock::WaitForEntriesResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn detect(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::deadlock::DeadlockRequest>, sink: ::grpcio::DuplexSink<super::deadlock::DeadlockResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_deadlock<S: Deadlock + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

@@ -271,24 +271,48 @@ impl ImportSstClient {
     pub fn clear_files_async(&self, req: &super::import_sstpb::ClearRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::import_sstpb::ClearResponse>> {
         self.clear_files_async_opt(req, ::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ImportSst {
-    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchModeResponse>);
-    fn upload(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>);
-    fn ingest(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
-    fn compact(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>);
-    fn set_download_speed_limit(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::SetDownloadSpeedLimitRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SetDownloadSpeedLimitResponse>);
-    fn download(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::DownloadRequest, sink: ::grpcio::UnarySink<super::import_sstpb::DownloadResponse>);
-    fn write(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::WriteRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::WriteResponse>);
-    fn raw_write(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::import_sstpb::RawWriteRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::RawWriteResponse>);
-    fn multi_ingest(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::MultiIngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>);
-    fn duplicate_detect(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::DuplicateDetectRequest, sink: ::grpcio::ServerStreamingSink<super::import_sstpb::DuplicateDetectResponse>);
-    fn apply(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::ApplyRequest, sink: ::grpcio::UnarySink<super::import_sstpb::ApplyResponse>);
-    fn clear_files(&mut self, ctx: ::grpcio::RpcContext, req: super::import_sstpb::ClearRequest, sink: ::grpcio::UnarySink<super::import_sstpb::ClearResponse>);
+    fn switch_mode(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::SwitchModeRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SwitchModeResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn upload(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::import_sstpb::UploadRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::UploadResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn ingest(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::IngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn compact(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::CompactRequest, sink: ::grpcio::UnarySink<super::import_sstpb::CompactResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn set_download_speed_limit(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::SetDownloadSpeedLimitRequest, sink: ::grpcio::UnarySink<super::import_sstpb::SetDownloadSpeedLimitResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn download(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::DownloadRequest, sink: ::grpcio::UnarySink<super::import_sstpb::DownloadResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn write(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::import_sstpb::WriteRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::WriteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn raw_write(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::import_sstpb::RawWriteRequest>, sink: ::grpcio::ClientStreamingSink<super::import_sstpb::RawWriteResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn multi_ingest(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::MultiIngestRequest, sink: ::grpcio::UnarySink<super::import_sstpb::IngestResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn duplicate_detect(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::DuplicateDetectRequest, sink: ::grpcio::ServerStreamingSink<super::import_sstpb::DuplicateDetectResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn apply(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::ApplyRequest, sink: ::grpcio::UnarySink<super::import_sstpb::ApplyResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
+    fn clear_files(&mut self, ctx: ::grpcio::RpcContext, _req: super::import_sstpb::ClearRequest, sink: ::grpcio::UnarySink<super::import_sstpb::ClearResponse>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_import_sst<S: ImportSst + Send + Clone + 'static>(s: S) -> ::grpcio::Service {

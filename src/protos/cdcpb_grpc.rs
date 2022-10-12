@@ -42,13 +42,15 @@ impl ChangeDataClient {
     pub fn event_feed(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::cdcpb::ChangeDataRequest>, ::grpcio::ClientDuplexReceiver<super::cdcpb::ChangeDataEvent>)> {
         self.event_feed_opt(::grpcio::CallOption::default())
     }
-    pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Output = ()> + Send + 'static {
+    pub fn spawn<F>(&self, f: F) where F: ::std::future::Future<Output = ()> + Send + 'static {
         self.client.spawn(f)
     }
 }
 
 pub trait ChangeData {
-    fn event_feed(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::cdcpb::ChangeDataRequest>, sink: ::grpcio::DuplexSink<super::cdcpb::ChangeDataEvent>);
+    fn event_feed(&mut self, ctx: ::grpcio::RpcContext, _stream: ::grpcio::RequestStream<super::cdcpb::ChangeDataRequest>, sink: ::grpcio::DuplexSink<super::cdcpb::ChangeDataEvent>) {
+        grpcio::unimplemented_call!(ctx, sink)
+    }
 }
 
 pub fn create_change_data<S: ChangeData + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
