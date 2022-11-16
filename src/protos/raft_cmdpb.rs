@@ -7035,6 +7035,7 @@ pub struct CommitMergeRequest {
     pub source: ::protobuf::SingularPtrField<super::metapb::Region>,
     pub commit: u64,
     pub entries: ::protobuf::RepeatedField<super::eraftpb::Entry>,
+    pub source_meta: ::std::vec::Vec<u8>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -7123,6 +7124,32 @@ impl CommitMergeRequest {
     pub fn take_entries(&mut self) -> ::protobuf::RepeatedField<super::eraftpb::Entry> {
         ::std::mem::replace(&mut self.entries, ::protobuf::RepeatedField::new())
     }
+
+    // bytes source_meta = 4;
+
+
+    pub fn get_source_meta(&self) -> &[u8] {
+        &self.source_meta
+    }
+    pub fn clear_source_meta(&mut self) {
+        self.source_meta.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_source_meta(&mut self, v: ::std::vec::Vec<u8>) {
+        self.source_meta = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_source_meta(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.source_meta
+    }
+
+    // Take field
+    pub fn take_source_meta(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.source_meta, ::std::vec::Vec::new())
+    }
 }
 
 impl ::protobuf::Message for CommitMergeRequest {
@@ -7157,6 +7184,9 @@ impl ::protobuf::Message for CommitMergeRequest {
                 3 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.entries)?;
                 },
+                4 => {
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.source_meta)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -7180,6 +7210,9 @@ impl ::protobuf::Message for CommitMergeRequest {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        if !self.source_meta.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(4, &self.source_meta);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -7199,6 +7232,9 @@ impl ::protobuf::Message for CommitMergeRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
+        if !self.source_meta.is_empty() {
+            os.write_bytes(4, &self.source_meta)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -7249,6 +7285,7 @@ impl ::protobuf::Clear for CommitMergeRequest {
         self.source.clear();
         self.commit = 0;
         self.entries.clear();
+        self.source_meta.clear();
         self.unknown_fields.clear();
     }
 }
@@ -7261,6 +7298,7 @@ impl ::protobuf::PbPrint for CommitMergeRequest {
         ::protobuf::PbPrint::fmt(&self.source, "source", buf);
         ::protobuf::PbPrint::fmt(&self.commit, "commit", buf);
         ::protobuf::PbPrint::fmt(&self.entries, "entries", buf);
+        ::protobuf::PbPrint::fmt(&self.source_meta, "source_meta", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -7274,6 +7312,7 @@ impl ::std::fmt::Debug for CommitMergeRequest {
         ::protobuf::PbPrint::fmt(&self.source, "source", &mut s);
         ::protobuf::PbPrint::fmt(&self.commit, "commit", &mut s);
         ::protobuf::PbPrint::fmt(&self.entries, "entries", &mut s);
+        ::protobuf::PbPrint::fmt(&self.source_meta, "source_meta", &mut s);
         write!(f, "{}", s)
     }
 }
