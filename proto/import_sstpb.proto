@@ -177,7 +177,7 @@ message DownloadRequest {
     backup.CipherInfo cipher_info = 16;
 
     // The type of the download request.
-    DownloadRequestType request_type = 17;
+    DownloadRequestType request_type = 18;
 }
 
 enum DownloadRequestType {
