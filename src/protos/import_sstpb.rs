@@ -2652,6 +2652,7 @@ pub struct DownloadRequest {
     pub name: ::std::string::String,
     pub rewrite_rule: ::protobuf::SingularPtrField<RewriteRule>,
     pub storage_backend: ::protobuf::SingularPtrField<super::brpb::StorageBackend>,
+    pub storage_cache_id: ::std::string::String,
     pub is_raw_kv: bool,
     pub cipher_info: ::protobuf::SingularPtrField<super::brpb::CipherInfo>,
     pub request_type: DownloadRequestType,
@@ -2796,6 +2797,32 @@ impl DownloadRequest {
         self.storage_backend.take().unwrap_or_else(|| super::brpb::StorageBackend::new())
     }
 
+    // string storage_cache_id = 17;
+
+
+    pub fn get_storage_cache_id(&self) -> &str {
+        &self.storage_cache_id
+    }
+    pub fn clear_storage_cache_id(&mut self) {
+        self.storage_cache_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_storage_cache_id(&mut self, v: ::std::string::String) {
+        self.storage_cache_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_storage_cache_id(&mut self) -> &mut ::std::string::String {
+        &mut self.storage_cache_id
+    }
+
+    // Take field
+    pub fn take_storage_cache_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.storage_cache_id, ::std::string::String::new())
+    }
+
     // bool is_raw_kv = 15;
 
 
@@ -2844,7 +2871,7 @@ impl DownloadRequest {
         self.cipher_info.take().unwrap_or_else(|| super::brpb::CipherInfo::new())
     }
 
-    // .import_sstpb.DownloadRequestType request_type = 17;
+    // .import_sstpb.DownloadRequestType request_type = 18;
 
 
     pub fn get_request_type(&self) -> DownloadRequestType {
@@ -2901,6 +2928,9 @@ impl ::protobuf::Message for DownloadRequest {
                 14 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.storage_backend)?;
                 },
+                17 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.storage_cache_id)?;
+                },
                 15 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
@@ -2911,7 +2941,7 @@ impl ::protobuf::Message for DownloadRequest {
                 16 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.cipher_info)?;
                 },
-                17 => {
+                18 => {
                     if wire_type == ::protobuf::wire_format::WireTypeVarint {self.request_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
                 },
                 _ => {
@@ -2941,6 +2971,9 @@ impl ::protobuf::Message for DownloadRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        if !self.storage_cache_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(17, &self.storage_cache_id);
+        }
         if self.is_raw_kv != false {
             my_size += 2;
         }
@@ -2949,7 +2982,7 @@ impl ::protobuf::Message for DownloadRequest {
             my_size += 2 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
         if self.request_type != DownloadRequestType::Legacy {
-            my_size += ::protobuf::rt::enum_size(17, self.request_type);
+            my_size += ::protobuf::rt::enum_size(18, self.request_type);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -2975,6 +3008,9 @@ impl ::protobuf::Message for DownloadRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        if !self.storage_cache_id.is_empty() {
+            os.write_string(17, &self.storage_cache_id)?;
+        }
         if self.is_raw_kv != false {
             os.write_bool(15, self.is_raw_kv)?;
         }
@@ -2984,7 +3020,7 @@ impl ::protobuf::Message for DownloadRequest {
             v.write_to_with_cached_sizes(os)?;
         }
         if self.request_type != DownloadRequestType::Legacy {
-            os.write_enum(17, self.request_type.value())?;
+            os.write_enum(18, self.request_type.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -3037,6 +3073,7 @@ impl ::protobuf::Clear for DownloadRequest {
         self.name.clear();
         self.rewrite_rule.clear();
         self.storage_backend.clear();
+        self.storage_cache_id.clear();
         self.is_raw_kv = false;
         self.cipher_info.clear();
         self.request_type = DownloadRequestType::Legacy;
@@ -3053,6 +3090,7 @@ impl ::protobuf::PbPrint for DownloadRequest {
         ::protobuf::PbPrint::fmt(&self.name, "name", buf);
         ::protobuf::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", buf);
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
+        ::protobuf::PbPrint::fmt(&self.storage_cache_id, "storage_cache_id", buf);
         ::protobuf::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", buf);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", buf);
         ::protobuf::PbPrint::fmt(&self.request_type, "request_type", buf);
@@ -3070,6 +3108,7 @@ impl ::std::fmt::Debug for DownloadRequest {
         ::protobuf::PbPrint::fmt(&self.name, "name", &mut s);
         ::protobuf::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", &mut s);
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
+        ::protobuf::PbPrint::fmt(&self.storage_cache_id, "storage_cache_id", &mut s);
         ::protobuf::PbPrint::fmt(&self.is_raw_kv, "is_raw_kv", &mut s);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", &mut s);
         ::protobuf::PbPrint::fmt(&self.request_type, "request_type", &mut s);
@@ -6470,7 +6509,9 @@ impl ::protobuf::reflect::ProtobufValue for DuplicateDetectResponse {
 pub struct KvMeta {
     // message fields
     pub name: ::std::string::String,
+    pub range_offset: u64,
     pub length: u64,
+    pub range_length: u64,
     pub cf: ::std::string::String,
     pub is_delete: bool,
     pub start_ts: u64,
@@ -6479,6 +6520,7 @@ pub struct KvMeta {
     pub end_key: ::std::vec::Vec<u8>,
     pub sha256: ::std::vec::Vec<u8>,
     pub start_snapshot_ts: u64,
+    pub compression_type: super::brpb::CompressionType,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -6521,6 +6563,21 @@ impl KvMeta {
         ::std::mem::replace(&mut self.name, ::std::string::String::new())
     }
 
+    // uint64 range_offset = 11;
+
+
+    pub fn get_range_offset(&self) -> u64 {
+        self.range_offset
+    }
+    pub fn clear_range_offset(&mut self) {
+        self.range_offset = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_range_offset(&mut self, v: u64) {
+        self.range_offset = v;
+    }
+
     // uint64 length = 2;
 
 
@@ -6534,6 +6591,21 @@ impl KvMeta {
     // Param is passed by value, moved
     pub fn set_length(&mut self, v: u64) {
         self.length = v;
+    }
+
+    // uint64 range_length = 12;
+
+
+    pub fn get_range_length(&self) -> u64 {
+        self.range_length
+    }
+    pub fn clear_range_length(&mut self) {
+        self.range_length = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_range_length(&mut self, v: u64) {
+        self.range_length = v;
     }
 
     // string cf = 3;
@@ -6699,6 +6771,21 @@ impl KvMeta {
     pub fn set_start_snapshot_ts(&mut self, v: u64) {
         self.start_snapshot_ts = v;
     }
+
+    // .backup.CompressionType compression_type = 13;
+
+
+    pub fn get_compression_type(&self) -> super::brpb::CompressionType {
+        self.compression_type
+    }
+    pub fn clear_compression_type(&mut self) {
+        self.compression_type = super::brpb::CompressionType::Unknown;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_compression_type(&mut self, v: super::brpb::CompressionType) {
+        self.compression_type = v;
+    }
 }
 
 impl ::protobuf::Message for KvMeta {
@@ -6713,12 +6800,26 @@ impl ::protobuf::Message for KvMeta {
                 1 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.name)?;
                 },
+                11 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.range_offset = tmp;
+                },
                 2 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
                         return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
                     }
                     let tmp = is.read_uint64()?;
                     self.length = tmp;
+                },
+                12 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.range_length = tmp;
                 },
                 3 => {
                     ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf)?;
@@ -6760,6 +6861,9 @@ impl ::protobuf::Message for KvMeta {
                     let tmp = is.read_uint64()?;
                     self.start_snapshot_ts = tmp;
                 },
+                13 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.compression_type = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -6775,8 +6879,14 @@ impl ::protobuf::Message for KvMeta {
         if !self.name.is_empty() {
             my_size += ::protobuf::rt::string_size(1, &self.name);
         }
+        if self.range_offset != 0 {
+            my_size += ::protobuf::rt::value_size(11, self.range_offset, ::protobuf::wire_format::WireTypeVarint);
+        }
         if self.length != 0 {
             my_size += ::protobuf::rt::value_size(2, self.length, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.range_length != 0 {
+            my_size += ::protobuf::rt::value_size(12, self.range_length, ::protobuf::wire_format::WireTypeVarint);
         }
         if !self.cf.is_empty() {
             my_size += ::protobuf::rt::string_size(3, &self.cf);
@@ -6802,6 +6912,9 @@ impl ::protobuf::Message for KvMeta {
         if self.start_snapshot_ts != 0 {
             my_size += ::protobuf::rt::value_size(9, self.start_snapshot_ts, ::protobuf::wire_format::WireTypeVarint);
         }
+        if self.compression_type != super::brpb::CompressionType::Unknown {
+            my_size += ::protobuf::rt::enum_size(13, self.compression_type);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -6811,8 +6924,14 @@ impl ::protobuf::Message for KvMeta {
         if !self.name.is_empty() {
             os.write_string(1, &self.name)?;
         }
+        if self.range_offset != 0 {
+            os.write_uint64(11, self.range_offset)?;
+        }
         if self.length != 0 {
             os.write_uint64(2, self.length)?;
+        }
+        if self.range_length != 0 {
+            os.write_uint64(12, self.range_length)?;
         }
         if !self.cf.is_empty() {
             os.write_string(3, &self.cf)?;
@@ -6837,6 +6956,9 @@ impl ::protobuf::Message for KvMeta {
         }
         if self.start_snapshot_ts != 0 {
             os.write_uint64(9, self.start_snapshot_ts)?;
+        }
+        if self.compression_type != super::brpb::CompressionType::Unknown {
+            os.write_enum(13, self.compression_type.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -6886,7 +7008,9 @@ impl ::protobuf::Message for KvMeta {
 impl ::protobuf::Clear for KvMeta {
     fn clear(&mut self) {
         self.name.clear();
+        self.range_offset = 0;
         self.length = 0;
+        self.range_length = 0;
         self.cf.clear();
         self.is_delete = false;
         self.start_ts = 0;
@@ -6895,6 +7019,7 @@ impl ::protobuf::Clear for KvMeta {
         self.end_key.clear();
         self.sha256.clear();
         self.start_snapshot_ts = 0;
+        self.compression_type = super::brpb::CompressionType::Unknown;
         self.unknown_fields.clear();
     }
 }
@@ -6905,7 +7030,9 @@ impl ::protobuf::PbPrint for KvMeta {
         ::protobuf::push_message_start(name, buf);
         let old_len = buf.len();
         ::protobuf::PbPrint::fmt(&self.name, "name", buf);
+        ::protobuf::PbPrint::fmt(&self.range_offset, "range_offset", buf);
         ::protobuf::PbPrint::fmt(&self.length, "length", buf);
+        ::protobuf::PbPrint::fmt(&self.range_length, "range_length", buf);
         ::protobuf::PbPrint::fmt(&self.cf, "cf", buf);
         ::protobuf::PbPrint::fmt(&self.is_delete, "is_delete", buf);
         ::protobuf::PbPrint::fmt(&self.start_ts, "start_ts", buf);
@@ -6914,6 +7041,7 @@ impl ::protobuf::PbPrint for KvMeta {
         ::protobuf::PbPrint::fmt(&self.end_key, "end_key", buf);
         ::protobuf::PbPrint::fmt(&self.sha256, "sha256", buf);
         ::protobuf::PbPrint::fmt(&self.start_snapshot_ts, "start_snapshot_ts", buf);
+        ::protobuf::PbPrint::fmt(&self.compression_type, "compression_type", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -6925,7 +7053,9 @@ impl ::std::fmt::Debug for KvMeta {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         ::protobuf::PbPrint::fmt(&self.name, "name", &mut s);
+        ::protobuf::PbPrint::fmt(&self.range_offset, "range_offset", &mut s);
         ::protobuf::PbPrint::fmt(&self.length, "length", &mut s);
+        ::protobuf::PbPrint::fmt(&self.range_length, "range_length", &mut s);
         ::protobuf::PbPrint::fmt(&self.cf, "cf", &mut s);
         ::protobuf::PbPrint::fmt(&self.is_delete, "is_delete", &mut s);
         ::protobuf::PbPrint::fmt(&self.start_ts, "start_ts", &mut s);
@@ -6934,6 +7064,7 @@ impl ::std::fmt::Debug for KvMeta {
         ::protobuf::PbPrint::fmt(&self.end_key, "end_key", &mut s);
         ::protobuf::PbPrint::fmt(&self.sha256, "sha256", &mut s);
         ::protobuf::PbPrint::fmt(&self.start_snapshot_ts, "start_snapshot_ts", &mut s);
+        ::protobuf::PbPrint::fmt(&self.compression_type, "compression_type", &mut s);
         write!(f, "{}", s)
     }
 }
@@ -6948,7 +7079,10 @@ impl ::protobuf::reflect::ProtobufValue for KvMeta {
 pub struct ApplyRequest {
     // message fields
     pub meta: ::protobuf::SingularPtrField<KvMeta>,
+    pub metas: ::protobuf::RepeatedField<KvMeta>,
     pub rewrite_rule: ::protobuf::SingularPtrField<RewriteRule>,
+    pub rewrite_rules: ::protobuf::RepeatedField<RewriteRule>,
+    pub storage_cache_id: ::std::string::String,
     pub storage_backend: ::protobuf::SingularPtrField<super::brpb::StorageBackend>,
     pub context: ::protobuf::SingularPtrField<super::kvrpcpb::Context>,
     pub cipher_info: ::protobuf::SingularPtrField<super::brpb::CipherInfo>,
@@ -7001,6 +7135,31 @@ impl ApplyRequest {
         self.meta.take().unwrap_or_else(|| KvMeta::new())
     }
 
+    // repeated .import_sstpb.KVMeta metas = 12;
+
+
+    pub fn get_metas(&self) -> &[KvMeta] {
+        &self.metas
+    }
+    pub fn clear_metas(&mut self) {
+        self.metas.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_metas(&mut self, v: ::protobuf::RepeatedField<KvMeta>) {
+        self.metas = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_metas(&mut self) -> &mut ::protobuf::RepeatedField<KvMeta> {
+        &mut self.metas
+    }
+
+    // Take field
+    pub fn take_metas(&mut self) -> ::protobuf::RepeatedField<KvMeta> {
+        ::std::mem::replace(&mut self.metas, ::protobuf::RepeatedField::new())
+    }
+
     // .import_sstpb.RewriteRule rewrite_rule = 2;
 
 
@@ -7032,6 +7191,57 @@ impl ApplyRequest {
     // Take field
     pub fn take_rewrite_rule(&mut self) -> RewriteRule {
         self.rewrite_rule.take().unwrap_or_else(|| RewriteRule::new())
+    }
+
+    // repeated .import_sstpb.RewriteRule rewrite_rules = 13;
+
+
+    pub fn get_rewrite_rules(&self) -> &[RewriteRule] {
+        &self.rewrite_rules
+    }
+    pub fn clear_rewrite_rules(&mut self) {
+        self.rewrite_rules.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_rewrite_rules(&mut self, v: ::protobuf::RepeatedField<RewriteRule>) {
+        self.rewrite_rules = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_rewrite_rules(&mut self) -> &mut ::protobuf::RepeatedField<RewriteRule> {
+        &mut self.rewrite_rules
+    }
+
+    // Take field
+    pub fn take_rewrite_rules(&mut self) -> ::protobuf::RepeatedField<RewriteRule> {
+        ::std::mem::replace(&mut self.rewrite_rules, ::protobuf::RepeatedField::new())
+    }
+
+    // string storage_cache_id = 5;
+
+
+    pub fn get_storage_cache_id(&self) -> &str {
+        &self.storage_cache_id
+    }
+    pub fn clear_storage_cache_id(&mut self) {
+        self.storage_cache_id.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_storage_cache_id(&mut self, v: ::std::string::String) {
+        self.storage_cache_id = v;
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_storage_cache_id(&mut self) -> &mut ::std::string::String {
+        &mut self.storage_cache_id
+    }
+
+    // Take field
+    pub fn take_storage_cache_id(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.storage_cache_id, ::std::string::String::new())
     }
 
     // .backup.StorageBackend storage_backend = 3;
@@ -7141,7 +7351,17 @@ impl ::protobuf::Message for ApplyRequest {
                 return false;
             }
         };
+        for v in &self.metas {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         for v in &self.rewrite_rule {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.rewrite_rules {
             if !v.is_initialized() {
                 return false;
             }
@@ -7171,8 +7391,17 @@ impl ::protobuf::Message for ApplyRequest {
                 1 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.meta)?;
                 },
+                12 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.metas)?;
+                },
                 2 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.rewrite_rule)?;
+                },
+                13 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.rewrite_rules)?;
+                },
+                5 => {
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.storage_cache_id)?;
                 },
                 3 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.storage_backend)?;
@@ -7199,9 +7428,20 @@ impl ::protobuf::Message for ApplyRequest {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
+        for value in &self.metas {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         if let Some(ref v) = self.rewrite_rule.as_ref() {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        for value in &self.rewrite_rules {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
+        if !self.storage_cache_id.is_empty() {
+            my_size += ::protobuf::rt::string_size(5, &self.storage_cache_id);
         }
         if let Some(ref v) = self.storage_backend.as_ref() {
             let len = v.compute_size();
@@ -7226,10 +7466,23 @@ impl ::protobuf::Message for ApplyRequest {
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
+        for v in &self.metas {
+            os.write_tag(12, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
         if let Some(ref v) = self.rewrite_rule.as_ref() {
             os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
+        }
+        for v in &self.rewrite_rules {
+            os.write_tag(13, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        if !self.storage_cache_id.is_empty() {
+            os.write_string(5, &self.storage_cache_id)?;
         }
         if let Some(ref v) = self.storage_backend.as_ref() {
             os.write_tag(3, ::protobuf::wire_format::WireTypeLengthDelimited)?;
@@ -7294,7 +7547,10 @@ impl ::protobuf::Message for ApplyRequest {
 impl ::protobuf::Clear for ApplyRequest {
     fn clear(&mut self) {
         self.meta.clear();
+        self.metas.clear();
         self.rewrite_rule.clear();
+        self.rewrite_rules.clear();
+        self.storage_cache_id.clear();
         self.storage_backend.clear();
         self.context.clear();
         self.cipher_info.clear();
@@ -7308,7 +7564,10 @@ impl ::protobuf::PbPrint for ApplyRequest {
         ::protobuf::push_message_start(name, buf);
         let old_len = buf.len();
         ::protobuf::PbPrint::fmt(&self.meta, "meta", buf);
+        ::protobuf::PbPrint::fmt(&self.metas, "metas", buf);
         ::protobuf::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", buf);
+        ::protobuf::PbPrint::fmt(&self.rewrite_rules, "rewrite_rules", buf);
+        ::protobuf::PbPrint::fmt(&self.storage_cache_id, "storage_cache_id", buf);
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", buf);
         ::protobuf::PbPrint::fmt(&self.context, "context", buf);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", buf);
@@ -7323,7 +7582,10 @@ impl ::std::fmt::Debug for ApplyRequest {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         let mut s = String::new();
         ::protobuf::PbPrint::fmt(&self.meta, "meta", &mut s);
+        ::protobuf::PbPrint::fmt(&self.metas, "metas", &mut s);
         ::protobuf::PbPrint::fmt(&self.rewrite_rule, "rewrite_rule", &mut s);
+        ::protobuf::PbPrint::fmt(&self.rewrite_rules, "rewrite_rules", &mut s);
+        ::protobuf::PbPrint::fmt(&self.storage_cache_id, "storage_cache_id", &mut s);
         ::protobuf::PbPrint::fmt(&self.storage_backend, "storage_backend", &mut s);
         ::protobuf::PbPrint::fmt(&self.context, "context", &mut s);
         ::protobuf::PbPrint::fmt(&self.cipher_info, "cipher_info", &mut s);

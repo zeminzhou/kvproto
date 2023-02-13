@@ -9122,6 +9122,7 @@ pub struct RegionHeartbeatRequest {
     pub replication_status: ::protobuf::SingularPtrField<super::replication_modepb::RegionReplicationStatus>,
     pub query_stats: ::protobuf::SingularPtrField<QueryStats>,
     pub cpu_usage: u64,
+    pub approximate_kv_size: u64,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     pub cached_size: ::protobuf::CachedSize,
@@ -9505,6 +9506,21 @@ impl RegionHeartbeatRequest {
     pub fn set_cpu_usage(&mut self, v: u64) {
         self.cpu_usage = v;
     }
+
+    // uint64 approximate_kv_size = 18;
+
+
+    pub fn get_approximate_kv_size(&self) -> u64 {
+        self.approximate_kv_size
+    }
+    pub fn clear_approximate_kv_size(&mut self) {
+        self.approximate_kv_size = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_approximate_kv_size(&mut self, v: u64) {
+        self.approximate_kv_size = v;
+    }
 }
 
 impl ::protobuf::Message for RegionHeartbeatRequest {
@@ -9636,6 +9652,13 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
                     let tmp = is.read_uint64()?;
                     self.cpu_usage = tmp;
                 },
+                18 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.approximate_kv_size = tmp;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -9703,6 +9726,9 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
         }
         if self.cpu_usage != 0 {
             my_size += ::protobuf::rt::value_size(17, self.cpu_usage, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.approximate_kv_size != 0 {
+            my_size += ::protobuf::rt::value_size(18, self.approximate_kv_size, ::protobuf::wire_format::WireTypeVarint);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -9774,6 +9800,9 @@ impl ::protobuf::Message for RegionHeartbeatRequest {
         if self.cpu_usage != 0 {
             os.write_uint64(17, self.cpu_usage)?;
         }
+        if self.approximate_kv_size != 0 {
+            os.write_uint64(18, self.approximate_kv_size)?;
+        }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
@@ -9837,6 +9866,7 @@ impl ::protobuf::Clear for RegionHeartbeatRequest {
         self.replication_status.clear();
         self.query_stats.clear();
         self.cpu_usage = 0;
+        self.approximate_kv_size = 0;
         self.unknown_fields.clear();
     }
 }
@@ -9862,6 +9892,7 @@ impl ::protobuf::PbPrint for RegionHeartbeatRequest {
         ::protobuf::PbPrint::fmt(&self.replication_status, "replication_status", buf);
         ::protobuf::PbPrint::fmt(&self.query_stats, "query_stats", buf);
         ::protobuf::PbPrint::fmt(&self.cpu_usage, "cpu_usage", buf);
+        ::protobuf::PbPrint::fmt(&self.approximate_kv_size, "approximate_kv_size", buf);
         if old_len < buf.len() {
           buf.push(' ');
         }
@@ -9888,6 +9919,7 @@ impl ::std::fmt::Debug for RegionHeartbeatRequest {
         ::protobuf::PbPrint::fmt(&self.replication_status, "replication_status", &mut s);
         ::protobuf::PbPrint::fmt(&self.query_stats, "query_stats", &mut s);
         ::protobuf::PbPrint::fmt(&self.cpu_usage, "cpu_usage", &mut s);
+        ::protobuf::PbPrint::fmt(&self.approximate_kv_size, "approximate_kv_size", &mut s);
         write!(f, "{}", s)
     }
 }

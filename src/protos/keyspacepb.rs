@@ -1193,11 +1193,480 @@ impl ::protobuf::reflect::ProtobufValue for WatchKeyspacesResponse {
     }
 }
 
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateKeyspaceStateRequest {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<super::pdpb::RequestHeader>,
+    pub id: u32,
+    pub state: KeyspaceState,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateKeyspaceStateRequest {
+    fn default() -> &'a UpdateKeyspaceStateRequest {
+        <UpdateKeyspaceStateRequest as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateKeyspaceStateRequest {
+    pub fn new() -> UpdateKeyspaceStateRequest {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.RequestHeader header = 1;
+
+
+    pub fn get_header(&self) -> &super::pdpb::RequestHeader {
+        self.header.as_ref().unwrap_or_else(|| super::pdpb::RequestHeader::default_instance())
+    }
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: super::pdpb::RequestHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut super::pdpb::RequestHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> super::pdpb::RequestHeader {
+        self.header.take().unwrap_or_else(|| super::pdpb::RequestHeader::new())
+    }
+
+    // uint32 id = 2;
+
+
+    pub fn get_id(&self) -> u32 {
+        self.id
+    }
+    pub fn clear_id(&mut self) {
+        self.id = 0;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_id(&mut self, v: u32) {
+        self.id = v;
+    }
+
+    // .keyspacepb.KeyspaceState state = 3;
+
+
+    pub fn get_state(&self) -> KeyspaceState {
+        self.state
+    }
+    pub fn clear_state(&mut self) {
+        self.state = KeyspaceState::Enabled;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_state(&mut self, v: KeyspaceState) {
+        self.state = v;
+    }
+}
+
+impl ::protobuf::Message for UpdateKeyspaceStateRequest {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint32()?;
+                    self.id = tmp;
+                },
+                3 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.state = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if self.id != 0 {
+            my_size += ::protobuf::rt::value_size(2, self.id, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if self.state != KeyspaceState::Enabled {
+            my_size += ::protobuf::rt::enum_size(3, self.state);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if self.id != 0 {
+            os.write_uint32(2, self.id)?;
+        }
+        if self.state != KeyspaceState::Enabled {
+            os.write_enum(3, self.state.value())?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateKeyspaceStateRequest {
+        UpdateKeyspaceStateRequest::new()
+    }
+
+    fn default_instance() -> &'static UpdateKeyspaceStateRequest {
+        static mut instance: ::protobuf::lazy::Lazy<UpdateKeyspaceStateRequest> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const UpdateKeyspaceStateRequest,
+        };
+        unsafe {
+            instance.get(UpdateKeyspaceStateRequest::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for UpdateKeyspaceStateRequest {
+    fn clear(&mut self) {
+        self.header.clear();
+        self.id = 0;
+        self.state = KeyspaceState::Enabled;
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for UpdateKeyspaceStateRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.header, "header", buf);
+        ::protobuf::PbPrint::fmt(&self.id, "id", buf);
+        ::protobuf::PbPrint::fmt(&self.state, "state", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for UpdateKeyspaceStateRequest {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.header, "header", &mut s);
+        ::protobuf::PbPrint::fmt(&self.id, "id", &mut s);
+        ::protobuf::PbPrint::fmt(&self.state, "state", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateKeyspaceStateRequest {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct UpdateKeyspaceStateResponse {
+    // message fields
+    pub header: ::protobuf::SingularPtrField<super::pdpb::ResponseHeader>,
+    pub keyspace: ::protobuf::SingularPtrField<KeyspaceMeta>,
+    // special fields
+    pub unknown_fields: ::protobuf::UnknownFields,
+    pub cached_size: ::protobuf::CachedSize,
+}
+
+impl<'a> ::std::default::Default for &'a UpdateKeyspaceStateResponse {
+    fn default() -> &'a UpdateKeyspaceStateResponse {
+        <UpdateKeyspaceStateResponse as ::protobuf::Message>::default_instance()
+    }
+}
+
+impl UpdateKeyspaceStateResponse {
+    pub fn new() -> UpdateKeyspaceStateResponse {
+        ::std::default::Default::default()
+    }
+
+    // .pdpb.ResponseHeader header = 1;
+
+
+    pub fn get_header(&self) -> &super::pdpb::ResponseHeader {
+        self.header.as_ref().unwrap_or_else(|| super::pdpb::ResponseHeader::default_instance())
+    }
+    pub fn clear_header(&mut self) {
+        self.header.clear();
+    }
+
+    pub fn has_header(&self) -> bool {
+        self.header.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_header(&mut self, v: super::pdpb::ResponseHeader) {
+        self.header = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_header(&mut self) -> &mut super::pdpb::ResponseHeader {
+        if self.header.is_none() {
+            self.header.set_default();
+        }
+        self.header.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_header(&mut self) -> super::pdpb::ResponseHeader {
+        self.header.take().unwrap_or_else(|| super::pdpb::ResponseHeader::new())
+    }
+
+    // .keyspacepb.KeyspaceMeta keyspace = 2;
+
+
+    pub fn get_keyspace(&self) -> &KeyspaceMeta {
+        self.keyspace.as_ref().unwrap_or_else(|| KeyspaceMeta::default_instance())
+    }
+    pub fn clear_keyspace(&mut self) {
+        self.keyspace.clear();
+    }
+
+    pub fn has_keyspace(&self) -> bool {
+        self.keyspace.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_keyspace(&mut self, v: KeyspaceMeta) {
+        self.keyspace = ::protobuf::SingularPtrField::some(v);
+    }
+
+    // Mutable pointer to the field.
+    // If field is not initialized, it is initialized with default value first.
+    pub fn mut_keyspace(&mut self) -> &mut KeyspaceMeta {
+        if self.keyspace.is_none() {
+            self.keyspace.set_default();
+        }
+        self.keyspace.as_mut().unwrap()
+    }
+
+    // Take field
+    pub fn take_keyspace(&mut self) -> KeyspaceMeta {
+        self.keyspace.take().unwrap_or_else(|| KeyspaceMeta::new())
+    }
+}
+
+impl ::protobuf::Message for UpdateKeyspaceStateResponse {
+    fn is_initialized(&self) -> bool {
+        for v in &self.header {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.keyspace {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.header)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.keyspace)?;
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(ref v) = self.header.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        if let Some(ref v) = self.keyspace.as_ref() {
+            let len = v.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(ref v) = self.header.as_ref() {
+            os.write_tag(1, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        if let Some(ref v) = self.keyspace.as_ref() {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &dyn (::std::any::Any) {
+        self as &dyn (::std::any::Any)
+    }
+    fn as_any_mut(&mut self) -> &mut dyn (::std::any::Any) {
+        self as &mut dyn (::std::any::Any)
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<dyn (::std::any::Any)> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        Self::descriptor_static()
+    }
+
+    fn new() -> UpdateKeyspaceStateResponse {
+        UpdateKeyspaceStateResponse::new()
+    }
+
+    fn default_instance() -> &'static UpdateKeyspaceStateResponse {
+        static mut instance: ::protobuf::lazy::Lazy<UpdateKeyspaceStateResponse> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const UpdateKeyspaceStateResponse,
+        };
+        unsafe {
+            instance.get(UpdateKeyspaceStateResponse::new)
+        }
+    }
+}
+
+impl ::protobuf::Clear for UpdateKeyspaceStateResponse {
+    fn clear(&mut self) {
+        self.header.clear();
+        self.keyspace.clear();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::protobuf::PbPrint for UpdateKeyspaceStateResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, name: &str, buf: &mut String) {
+        ::protobuf::push_message_start(name, buf);
+        let old_len = buf.len();
+        ::protobuf::PbPrint::fmt(&self.header, "header", buf);
+        ::protobuf::PbPrint::fmt(&self.keyspace, "keyspace", buf);
+        if old_len < buf.len() {
+          buf.push(' ');
+        }
+        buf.push('}');
+    }
+}
+impl ::std::fmt::Debug for UpdateKeyspaceStateResponse {
+    #[allow(unused_variables)]
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        let mut s = String::new();
+        ::protobuf::PbPrint::fmt(&self.header, "header", &mut s);
+        ::protobuf::PbPrint::fmt(&self.keyspace, "keyspace", &mut s);
+        write!(f, "{}", s)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for UpdateKeyspaceStateResponse {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum KeyspaceState {
     Enabled = 0,
     Disabled = 1,
     Archived = 2,
+    Tombstone = 3,
 }
 
 impl ::protobuf::ProtobufEnum for KeyspaceState {
@@ -1210,6 +1679,7 @@ impl ::protobuf::ProtobufEnum for KeyspaceState {
             0 => ::std::option::Option::Some(KeyspaceState::Enabled),
             1 => ::std::option::Option::Some(KeyspaceState::Disabled),
             2 => ::std::option::Option::Some(KeyspaceState::Archived),
+            3 => ::std::option::Option::Some(KeyspaceState::Tombstone),
             _ => ::std::option::Option::None
         }
     }
@@ -1219,6 +1689,7 @@ impl ::protobuf::ProtobufEnum for KeyspaceState {
             KeyspaceState::Enabled,
             KeyspaceState::Disabled,
             KeyspaceState::Archived,
+            KeyspaceState::Tombstone,
         ];
         values
     }
